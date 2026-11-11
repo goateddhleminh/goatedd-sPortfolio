@@ -8,7 +8,7 @@
        SEO / SOCIAL — edit these by hand (crawlers don't run JS)
        ============================================================ -->
   <title>[Your Name] — Portfolio</title>
-  <meta name="description" content="Portfolio of [Your Name], [Your Role]. Personal projects, freelance work and brand collaborations." />
+  <meta name="description" content="Portfolio of [Your Name], [Your Role]. Personal projects, achievements & awards, and social channels." />
   <meta name="theme-color" content="#F8FAFC" />
   <link rel="canonical" href="https://example.com/" />
 
@@ -109,7 +109,7 @@
 
       /* Layout */
       --gutter: clamp(1rem, 3.5vw, 3rem);
-      --radius-card: 12px;
+      --radius-card: 14px;
       --radius-slide: 16px;
       --dock-space: 6rem;
 
@@ -130,7 +130,6 @@
       font-weight: 500;
       font-size: 1.125rem;
       line-height: 1.55;
-      /* Ethereal light ambient gradient */
       background: linear-gradient(180deg,
         #F8FAFC 0%,
         #F1F5F9 18%,
@@ -301,8 +300,6 @@
 
     /* ==========================================================
        3. CLEAR GLASS SLIDE STAGE
-          Translucent white frosted glass with high backdrop blur,
-          specular rim highlights, and razor-sharp black typography.
        ========================================================== */
     .slide {
       position: relative;
@@ -334,7 +331,6 @@
       isolation: isolate;
       will-change: transform, opacity;
     }
-    /* Specular clear glass reflection across top and bottom edges */
     .slide-frame::before {
       content: "";
       position: absolute;
@@ -355,7 +351,7 @@
       will-change: transform, opacity;
     }
 
-    /* Tiny header row inside each slide: [Your Name] ........ portfolio[Year] */
+    /* Tiny header row inside each slide */
     .slide-head {
       position: absolute;
       top: clamp(1.1rem, 2.8vh, 1.85rem);
@@ -374,7 +370,7 @@
       color: var(--text-muted);
     }
 
-    /* Section titles — tall, condensed pure black */
+    /* Section titles */
     .title {
       font-family: var(--font-display);
       font-weight: 700;
@@ -401,13 +397,11 @@
     }
     .signature { margin-top: 1.25rem; font-style: italic; font-size: 1.08rem; color: var(--text-muted); }
 
-    /* Split-text helpers (filled by JS) */
     .split .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .015em .12em; margin-bottom: -.12em; }
     .split .c { display: inline-block; will-change: transform; }
 
     /* ==========================================================
-       4. HALFTONE CORNERS (45° staggered screen-print dot grid)
-          Deep carbon etched screen-print dots in bottom corners
+       4. HALFTONE CORNERS
        ========================================================== */
     .halftone {
       position: absolute;
@@ -423,7 +417,6 @@
     .halftone i {
       position: absolute;
       inset: 0;
-      /* Two offset radial-gradients form a 45° rotated halftone dot grid */
       background-image:
         radial-gradient(circle, var(--dot) var(--r), transparent calc(var(--r) + .65px)),
         radial-gradient(circle, var(--dot) var(--r), transparent calc(var(--r) + .65px));
@@ -512,17 +505,16 @@
       100% { transform: scaleY(0); transform-origin: bottom; }
     }
 
-    /* Hidden until the intro is ready */
     .js-intro .slide--hero .ghost,
     .js-intro .slide--hero .slide-frame,
     .js-intro .dock { opacity: 0; }
 
     /* ==========================================================
-       6. SKILLS — CLEAR GLASS CAPSULES
+       6. SKILLS — INTERACTIVE CLEAR GLASS TOOLS & INSPECTOR
        ========================================================== */
     .tools {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem;
-      max-width: 46rem; margin: clamp(1.5rem, 4vh, 2.4rem) auto 0;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem;
+      max-width: 48rem; margin: clamp(1.5rem, 4vh, 2.4rem) auto 0;
     }
     .tool {
       display: inline-flex; align-items: center; gap: .65rem;
@@ -531,13 +523,21 @@
       border: 1px solid rgba(255, 255, 255, 0.95);
       box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.08), inset 0 1px 1px rgba(255, 255, 255, 1);
       -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-      color: var(--text);
-      transition: transform .45s var(--ease-out), border-color .3s, box-shadow .3s;
+      color: var(--text); cursor: pointer;
+      transition: transform .35s var(--ease-out), border-color .25s, box-shadow .3s, background-color .25s, color .25s;
+      -webkit-tap-highlight-color: transparent;
     }
     .tool:hover {
       transform: translateY(-3px);
       border-color: rgba(10, 10, 12, 0.35);
-      box-shadow: 0 12px 28px -8px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 1);
+      box-shadow: 0 14px 28px -8px rgba(15, 23, 42, 0.14), inset 0 1px 1px rgba(255, 255, 255, 1);
+    }
+    .tool:active { transform: scale(0.96); }
+    .tool.is-active {
+      background: #0A0A0C;
+      color: #FFFFFF;
+      border-color: #0A0A0C;
+      box-shadow: 0 12px 28px -6px rgba(10, 10, 12, 0.45);
     }
     .tool__icon {
       width: 2.15rem; height: 2.15rem; border-radius: 50%;
@@ -545,17 +545,68 @@
       background: #0A0A0C; color: #FFFFFF;
       font-family: var(--font-display); font-weight: 800; font-size: .95rem; letter-spacing: .04em;
       box-shadow: 0 3px 8px -2px rgba(10, 10, 12, 0.35);
+      transition: background-color .25s, color .25s;
     }
-    .tool__name { font-weight: 700; font-size: 1.05rem; color: var(--text); }
+    .tool.is-active .tool__icon {
+      background: #FFFFFF;
+      color: #0A0A0C;
+    }
+    .tool__name { font-weight: 700; font-size: 1.05rem; }
+
+    /* Interactive Tool Detail Inspector Card */
+    .tool-detail {
+      max-width: 38rem;
+      margin: 1.6rem auto 0;
+      text-align: left;
+      will-change: transform, opacity;
+    }
+    .tool-detail__inner {
+      padding: 1.25rem 1.6rem;
+      border-radius: var(--radius-card);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 24px 48px -14px rgba(15, 23, 42, 0.14), inset 0 1px 1.5px rgba(255, 255, 255, 1);
+      -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
+    }
+    .tool-detail__head {
+      display: flex; align-items: center; gap: .9rem; margin-bottom: .6rem;
+    }
+    .tool-detail__badge {
+      width: 2.5rem; height: 2.5rem; border-radius: 50%;
+      display: grid; place-items: center;
+      background: #0A0A0C; color: #FFFFFF;
+      font-family: var(--font-display); font-weight: 800; font-size: 1.05rem;
+      box-shadow: 0 4px 12px -3px rgba(10, 10, 12, 0.35);
+    }
+    .tool-detail__name {
+      font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; line-height: 1.1; color: var(--text);
+    }
+    .tool-detail__level {
+      font-size: .88rem; font-style: italic; color: var(--text-muted); margin-top: .15rem;
+    }
+    .tool-detail__desc {
+      font-size: 1.05rem; line-height: 1.52; color: var(--text-soft);
+    }
+    .tool-detail__foot {
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      margin-top: .9rem; padding-top: .75rem; border-top: 1px solid rgba(10, 10, 12, 0.08);
+    }
+    .tool-detail__hint {
+      font-size: .84rem; font-style: italic; color: var(--text-faint);
+    }
+    .tool-detail__link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-family: var(--font-display); font-weight: 800; font-size: .85rem; letter-spacing: .12em;
+      text-transform: uppercase; color: #0A0A0C; text-decoration: none;
+    }
+    .tool-detail__link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
     /* ==========================================================
-       7. POSTER CARDS — ELEVATED GLASS PEDESTALS
-          Mobile-first: swipeable scroll-snap carousel.
-          ≥768px: centered row.
+       7. POSTER CARDS — PROJECTS & ACHIEVEMENTS
        ========================================================== */
     .card-row {
-      --mw: 60vw;                       /* mobile card width */
-      --w: clamp(136px, 15.2vw, 204px); /* desktop card width */
+      --mw: 60vw;
+      --w: clamp(136px, 15.2vw, 204px);
       --ar: 3 / 4;
       display: flex; gap: 1rem;
       margin: clamp(1.4rem, 3.6vh, 2.4rem) calc(var(--gutter) * -1) 0;
@@ -569,8 +620,7 @@
     }
     .card-row::-webkit-scrollbar { display: none; }
     .card-row.is-dragging { scroll-snap-type: none; cursor: grabbing; }
-    .card-row--sm     { --mw: 52vw; --w: clamp(122px, 13.5vw, 182px); }
-    .card-row--narrow { --mw: 40vw; --w: clamp(102px, 11.2vw, 152px); --ar: 9 / 16; }
+    .card-row--sm { --mw: 52vw; --w: clamp(122px, 13.5vw, 182px); }
 
     .card-item { flex: 0 0 var(--mw); scroll-snap-align: center; }
 
@@ -630,12 +680,8 @@
       margin-top: .75rem; line-height: 1.25; text-align: center;
       text-shadow: 0 1px 10px var(--cap-shadow);
     }
-    .card-cap__title { display: block; font-weight: 700; font-size: 1.02rem; }
-    .card-cap__meta { display: block; font-style: italic; font-size: .92rem; color: var(--text-soft); }
-    .card-row--narrow .card-cap__title { font-size: .95rem; }
-    .card-row--narrow .card-cap__meta { font-size: .85rem; }
 
-    /* ---------- Placeholder poster art (gradient + shapes) ---------- */
+    /* Poster art */
     .poster {
       position: absolute; inset: 0; isolation: isolate; overflow: hidden;
       display: flex; flex-direction: column; padding: 8cqi;
@@ -665,24 +711,102 @@
       -webkit-mask-image: linear-gradient(to top, #000, transparent 60%);
               mask-image: linear-gradient(to top, #000, transparent 60%);
     }
-    /* Variant 0 — big sun + small dot */
     .poster--v0 .poster__shape--a { width: 95cqi; height: 95cqi; top: -28cqi; right: -35cqi; background: color-mix(in oklab, var(--c2) 55%, #fff); opacity: .55; }
     .poster--v0 .poster__shape--b { width: 34cqi; height: 34cqi; top: 42cqi; left: 10cqi; background: var(--ink); opacity: .12; }
-    /* Variant 1 — centered ring */
     .poster--v1 .poster__shape--a { width: 72cqi; height: 72cqi; top: 24cqi; left: 14cqi; border: 2.4cqi solid var(--ink); opacity: .22; }
     .poster--v1 .poster__shape--b { width: 30cqi; height: 30cqi; top: 45cqi; left: 35cqi; background: color-mix(in oklab, var(--c1) 50%, #fff); opacity: .75; }
     .poster--v1 .poster__title { text-align: center; }
-    /* Variant 2 — diagonal band, title on top */
     .poster--v2 .poster__shape--a { border-radius: 0; width: 170cqi; height: 36cqi; top: 52%; left: -35cqi; transform: rotate(-18deg); background: color-mix(in oklab, var(--c2) 70%, #000); opacity: .35; }
     .poster--v2 .poster__shape--b { width: 22cqi; height: 22cqi; bottom: 18cqi; right: 10cqi; background: var(--ink); opacity: .2; }
     .poster--v2 .poster__title { margin-top: 6cqi; }
     .poster--v2 .poster__foot { margin-top: auto; }
-    /* Variant 3 — arch + sun */
     .poster--v3 .poster__shape--a { border-radius: 999px 999px 0 0; width: 70cqi; height: 92cqi; bottom: 0; left: 15cqi; background: color-mix(in oklab, var(--c1) 55%, #fff); opacity: .45; }
     .poster--v3 .poster__shape--b { width: 22cqi; height: 22cqi; top: 30cqi; left: 39cqi; background: var(--ink); opacity: .18; }
 
     /* ==========================================================
-       8. CONTACT (THANK YOU SLIDE)
+       8. CHANNELS & SOCIALS SECTION (CLEAR GLASS TILES)
+       ========================================================== */
+    .social-row {
+      display: flex; gap: 1rem;
+      margin: clamp(1.4rem, 3.6vh, 2.4rem) calc(var(--gutter) * -1) 0;
+      padding: 1.25rem calc(50vw - 64vw / 2) 1rem;
+      overflow-x: auto; overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .social-row::-webkit-scrollbar { display: none; }
+    @media (min-width: 768px) {
+      .social-row {
+        justify-content: center; gap: clamp(1rem, 1.6vw, 1.4rem);
+        margin-inline: 0; padding-inline: 0;
+        overflow: visible; scroll-snap-type: none;
+        -webkit-mask-image: none; mask-image: none;
+      }
+    }
+    .social-item { flex: 0 0 64vw; scroll-snap-align: center; }
+    @media (min-width: 768px) {
+      .social-item { flex: 0 0 clamp(164px, 16vw, 196px); }
+    }
+    .social-card {
+      display: flex; flex-direction: column; text-align: left; height: 100%;
+      padding: clamp(1.2rem, 2vw, 1.5rem);
+      border-radius: var(--radius-card);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 16px 36px -12px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 1);
+      -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+      text-decoration: none; color: var(--text);
+      transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out), border-color .3s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .social-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(10, 10, 12, 0.35);
+      box-shadow: 0 28px 56px -14px rgba(15, 23, 42, 0.20), inset 0 1px 1px rgba(255, 255, 255, 1);
+    }
+    .social-card__top {
+      display: flex; justify-content: space-between; align-items: center; gap: .5rem;
+      margin-bottom: 1.1rem;
+    }
+    .social-card__icon {
+      width: 2.5rem; height: 2.5rem; border-radius: 50%;
+      display: grid; place-items: center;
+      background: #0A0A0C; color: #FFFFFF;
+      box-shadow: 0 4px 12px -3px rgba(10, 10, 12, 0.35);
+      flex-shrink: 0;
+    }
+    .social-card__icon svg { width: 1.3rem; height: 1.3rem; fill: currentColor; }
+    .social-card__tag {
+      font-family: var(--font-display); font-weight: 800; font-size: .68rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .2rem .55rem; border-radius: 999px;
+      background: rgba(10, 10, 12, 0.08); color: #0A0A0C;
+    }
+    .social-card__name {
+      font-family: var(--font-display); font-weight: 800; font-size: clamp(1.2rem, 1.55vw, 1.45rem);
+      line-height: 1.1; color: var(--text);
+    }
+    .social-card__handle {
+      font-size: .88rem; font-style: italic; color: var(--text-muted); margin-top: .2rem;
+    }
+    .social-card__desc {
+      font-size: .94rem; line-height: 1.44; color: var(--text-soft); margin-top: .75rem;
+      flex: 1;
+    }
+    .social-card__cta {
+      display: inline-flex; align-items: center; gap: .4rem;
+      margin-top: 1.1rem; padding-top: .75rem;
+      border-top: 1px solid rgba(10, 10, 12, 0.08);
+      font-family: var(--font-display); font-weight: 800; font-size: .82rem;
+      letter-spacing: .12em; text-transform: uppercase; color: #0A0A0C;
+    }
+    .social-card__cta span { transition: transform .3s var(--ease-out); }
+    .social-card:hover .social-card__cta span { transform: translateX(4px); }
+
+    /* ==========================================================
+       9. CONTACT (THANK YOU SLIDE)
        ========================================================== */
     .slide--contact .ghost { color: rgba(10, 10, 12, 0.035); font-size: clamp(8rem, 23vw, 21rem); }
     .contact-stage {
@@ -779,7 +903,7 @@
     .qr__note { font-style: italic; font-size: .78rem; color: var(--text-faint); }
 
     /* ==========================================================
-       9. FLOATING DOCK NAV + PROGRESS BAR
+       10. FLOATING DOCK NAV + PROGRESS BAR
        ========================================================== */
     .progress {
       position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 200;
@@ -823,7 +947,7 @@
     .dock a:focus-visible { outline-color: #0A0A0C; outline-offset: -2px; border-radius: 999px; }
 
     /* ==========================================================
-       10. CUSTOM CURSOR (desktop, fine pointers only — enabled by JS)
+       11. CUSTOM CURSOR
        ========================================================== */
     .cursor { display: none; }
     html.has-cursor, html.has-cursor * { cursor: none !important; }
@@ -853,7 +977,7 @@
     .lightbox .cursor-ring__circle { border-color: rgba(10, 10, 12, 0.5); }
 
     /* ==========================================================
-       11. LIGHTBOX (native <dialog>)
+       12. LIGHTBOX (native <dialog>)
        ========================================================== */
     .lightbox {
       --text: #0A0A0C;
@@ -913,16 +1037,12 @@
     }
 
     /* ==========================================================
-       12. RESPONSIVE TWEAKS
+       13. RESPONSIVE TWEAKS & REDUCED MOTION
        ========================================================== */
     @media (max-width: 480px) {
       .dock a { padding: .55rem .75rem; font-size: .78rem; letter-spacing: .1em; }
       .slide-head { font-size: .8rem; }
     }
-
-    /* ==========================================================
-       13. REDUCED MOTION — no smooth scroll, no looping animation
-       ========================================================== */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: .01ms !important; animation-iteration-count: 1 !important;
@@ -969,8 +1089,8 @@
       <li><a href="#about" data-nav="about">About</a></li>
       <li><a href="#skills" data-nav="skills">Skills</a></li>
       <li><a href="#projects" data-nav="projects">Projects</a></li>
-      <li><a href="#freelance" data-nav="freelance">Freelance</a></li>
-      <li><a href="#brands" data-nav="brands">Brands</a></li>
+      <li><a href="#achievements" data-nav="achievements">Awards</a></li>
+      <li><a href="#socials" data-nav="socials">Socials</a></li>
       <li><a href="#contact" data-nav="contact">Contact</a></li>
     </ul>
   </nav>
@@ -1012,7 +1132,7 @@
       </div>
     </section>
 
-    <!-- 3 · SKILLS -->
+    <!-- 3 · SKILLS & SOFTWARE -->
     <section class="slide" id="skills" aria-labelledby="skills-title">
       <div class="slide-frame">
         <div class="slide-head" data-head aria-hidden="true"></div>
@@ -1020,6 +1140,25 @@
           <h2 class="title split" id="skills-title" data-bind="sections.skills">Skills &amp; Software</h2>
           <span class="title-rule" aria-hidden="true"></span>
           <ul class="tools" data-tools data-stagger aria-label="Tools and software"></ul>
+
+          <!-- Interactive Tool Inspector Drawer -->
+          <div class="tool-detail" id="tool-detail" aria-live="polite" style="display: none;">
+            <div class="tool-detail__inner">
+              <div class="tool-detail__head">
+                <span class="tool-detail__badge" id="tool-detail-abbr">T1</span>
+                <div>
+                  <h3 class="tool-detail__name" id="tool-detail-name">Tool Name</h3>
+                  <p class="tool-detail__level" id="tool-detail-level">Proficiency · Experience</p>
+                </div>
+              </div>
+              <p class="tool-detail__desc" id="tool-detail-desc">Tool description</p>
+              <div class="tool-detail__foot">
+                <span class="tool-detail__hint">Click any tool above to view details</span>
+                <a class="tool-detail__link" id="tool-detail-link" href="#" target="_blank" rel="noopener">Learn more <span>→</span></a>
+              </div>
+            </div>
+          </div>
+
           <p class="lede" data-reveal data-bind="skillsText">[Skills paragraph]</p>
         </div>
       </div>
@@ -1037,25 +1176,25 @@
       </div>
     </section>
 
-    <!-- 5 · FREELANCE -->
-    <section class="slide" id="freelance" aria-labelledby="freelance-title">
+    <!-- 5 · ACHIEVEMENTS & AWARDS -->
+    <section class="slide" id="achievements" aria-labelledby="achievements-title">
       <div class="slide-frame">
         <div class="slide-head" data-head aria-hidden="true"></div>
         <div class="slide-inner">
-          <h2 class="title split" id="freelance-title" data-bind="sections.freelance">Freelance Work</h2>
-          <ul class="card-row card-row--sm" data-cards="freelance" data-stagger aria-label="Freelance work"></ul>
+          <h2 class="title split" id="achievements-title" data-bind="sections.achievements">Achievements &amp; Awards</h2>
+          <ul class="card-row card-row--sm" data-cards="achievements" data-stagger aria-label="Achievements and awards"></ul>
           <p class="swipe-hint" aria-hidden="true">Swipe to explore →</p>
         </div>
       </div>
     </section>
 
-    <!-- 6 · BRANDS -->
-    <section class="slide" id="brands" aria-labelledby="brands-title">
+    <!-- 6 · CHANNELS & SOCIALS -->
+    <section class="slide" id="socials" aria-labelledby="socials-title">
       <div class="slide-frame">
         <div class="slide-head" data-head aria-hidden="true"></div>
         <div class="slide-inner">
-          <h2 class="title split" id="brands-title" data-bind="sections.brands">Collaboration with Brands</h2>
-          <ul class="card-row card-row--narrow" data-cards="brands" data-stagger aria-label="Brand collaborations"></ul>
+          <h2 class="title split" id="socials-title" data-bind="sections.socials">Channels &amp; Socials</h2>
+          <ul class="social-row" data-social-cards data-stagger aria-label="Social profiles and channels"></ul>
           <p class="swipe-hint" aria-hidden="true">Swipe to explore →</p>
         </div>
       </div>
@@ -1089,7 +1228,7 @@
     </section>
   </main>
 
-  <!-- Project lightbox -->
+  <!-- Project & Achievement lightbox -->
   <dialog class="lightbox" id="lightbox" aria-labelledby="lb-title" aria-describedby="lb-desc">
     <div class="lb-backdrop" data-lb-close></div>
     <button class="icon-btn lb-close" type="button" data-lb-close aria-label="Close project" autofocus>
@@ -1129,7 +1268,7 @@
     </p>
   </noscript>
 
-  <!-- Libraries (pinned). Lenis isn't published on cdnjs, so it's loaded from jsDelivr. -->
+  <!-- Libraries (pinned) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
@@ -1139,14 +1278,11 @@
      ✏️  CONFIG — EDIT ALL YOUR CONTENT HERE
      ----------------------------------------------------------------
      Everything visible on the page comes from this object.
-     • colors: two hex values for the placeholder poster gradient
-     • image:  path/URL to a real image — replaces the gradient
-     • link:   optional URL shown as "View Project" in the lightbox
      ================================================================ */
   const CONFIG = {
     name: "[Your Name]",
     year: "[Year]",                 // e.g. "2026" → header shows "portfolio2026"
-    role: "[Your Role]",            // e.g. "Graphic Designer"
+    role: "[Your Role]",            // e.g. "Graphic Designer / Creative Developer"
     heroWord: "Portfolio",          // solid hero title. Use "\n" for multiple lines: "Port\nfolio"
     heroGhost: "Portfolio",         // translucent background word
 
@@ -1154,24 +1290,24 @@
       about: "About Me",
       skills: "Skills & Software",
       personal: "Personal Projects",
-      freelance: "Freelance Work",
-      brands: "Collaboration with Brands",
+      achievements: "Achievements & Awards",
+      socials: "Channels & Socials",
     },
 
     about:
       "[Short bio] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 
     skillsText:
-      "[Skills paragraph] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "[Skills overview] Click any software or framework above to inspect my proficiency level, use cases, and technical domain experience.",
 
-    // abbr = the 1–3 letters shown in the round icon
+    // Interactive Tools: click any tool on the site to inspect its details!
     tools: [
-      { name: "[Tool One]",   abbr: "T1" },
-      { name: "[Tool Two]",   abbr: "T2" },
-      { name: "[Tool Three]", abbr: "T3" },
-      { name: "[Tool Four]",  abbr: "T4" },
-      { name: "[Tool Five]",  abbr: "T5" },
-      { name: "[Tool Six]",   abbr: "T6" },
+      { name: "[Tool One]",   abbr: "T1", level: "Expert · 5+ Yrs", desc: "[Tool One description] Primary tool used for high-fidelity interactive prototyping, design system architecture, and asset production.", url: "#" },
+      { name: "[Tool Two]",   abbr: "T2", level: "Advanced · 4+ Yrs", desc: "[Tool Two description] Used for engineering modern component systems, fluid responsive layouts, and performance optimization.", url: "#" },
+      { name: "[Tool Three]", abbr: "T3", level: "Proficient · 3+ Yrs", desc: "[Tool Three description] Applied in interactive WebGL canvases, real-time 3D shaders, and camera path choreography.", url: "#" },
+      { name: "[Tool Four]",  abbr: "T4", level: "Expert · 4+ Yrs", desc: "[Tool Four description] Powers complex timeline choreography, physics-based springs, and scroll-linked micro-interactions.", url: "#" },
+      { name: "[Tool Five]",  abbr: "T5", level: "Mastery · 4+ Yrs", desc: "[Tool Five description] Implements design tokens, clear glassmorphism styling, and accessible WCAG AAA contrast hierarchy.", url: "#" },
+      { name: "[Tool Six]",   abbr: "T6", level: "Proficient · 3+ Yrs", desc: "[Tool Six description] Used for video post-production, motion graphics reels, and dynamic social presentation deliverables.", url: "#" },
     ],
 
     projects: {
@@ -1185,29 +1321,26 @@
         { title: "[Project Title 04]", category: "[Category]", year: "[Year]", colors: ["#243558", "#C83E3B"], image: "", link: "",
           description: "[Project description] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper nulla non metus auctor fringilla." },
       ],
-      freelance: [
-        { title: "[Client Name 01]", category: "[Service]", year: "[Year]", colors: ["#5E3822", "#B87C4C"], image: "", link: "",
-          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus mollis interdum." },
-        { title: "[Client Name 02]", category: "[Service]", year: "[Year]", colors: ["#CBB69D", "#7E5B40"], image: "", link: "",
-          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula." },
-        { title: "[Client Name 03]", category: "[Service]", year: "[Year]", colors: ["#6B4028", "#CA8D58"], image: "", link: "",
-          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper." },
-        { title: "[Client Name 04]", category: "[Service]", year: "[Year]", colors: ["#4A2B1A", "#A86E3E"], image: "", link: "",
-          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod." },
-      ],
-      brands: [
-        { title: "[Brand Name 01]", category: "[Campaign]", year: "[Year]", colors: ["#CBD5DF", "#9E8C7A"], image: "", link: "",
-          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-        { title: "[Brand Name 02]", category: "[Campaign]", year: "[Year]", colors: ["#E8E4DC", "#B5ACA0"], image: "", link: "",
-          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-        { title: "[Brand Name 03]", category: "[Campaign]", year: "[Year]", colors: ["#F7F5F0", "#D5C4A8"], image: "", link: "",
-          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-        { title: "[Brand Name 04]", category: "[Campaign]", year: "[Year]", colors: ["#CFD6D2", "#7E8C85"], image: "", link: "",
-          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-        { title: "[Brand Name 05]", category: "[Campaign]", year: "[Year]", colors: ["#183026", "#48725E"], image: "", link: "",
-          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+      achievements: [
+        { title: "[Award / Honor 01]", category: "[1st Place Winner]", year: "[Year]", colors: ["#D97706", "#FDE68A"], image: "", link: "",
+          description: "[Achievement description] First place award for creative excellence, technical architecture, and visual aesthetics in [Competition / Hackathon]." },
+        { title: "[Award / Honor 02]", category: "[Special Mention]", year: "[Year]", colors: ["#2563EB", "#93C5FD"], image: "", link: "",
+          description: "[Achievement description] Featured in [Industry Showcase / Design Gallery] as top project of the month." },
+        { title: "[Certification 03]", category: "[Professional License]", year: "[Year]", colors: ["#059669", "#A7F3D0"], image: "", link: "",
+          description: "[Achievement description] Professional certification in [Specialty / Technology Domain] demonstrating advanced technical mastery." },
+        { title: "[Honor 04]", category: "[Featured / Keynote]", year: "[Year]", colors: ["#7C3AED", "#DDD6FE"], image: "", link: "",
+          description: "[Achievement description] Invited speaker and showcase creator for [Global Tech / Creative Conference]." },
       ],
     },
+
+    // Your Social Channels (GitHub, X, LinkedIn, Discord, etc.)
+    socials: [
+      { platform: "GitHub", handle: "@goateddhleminh", url: "https://github.com/goateddhleminh", desc: "Open-source repositories, interactive web experiments & creative code.", tag: "Code", icon: "github" },
+      { platform: "LinkedIn", handle: "[Your Name]", url: "https://linkedin.com/", desc: "Career milestones, professional network & design engineering updates.", tag: "Career", icon: "linkedin" },
+      { platform: "X / Twitter", handle: "@[YourHandle]", url: "https://x.com/", desc: "Thoughts, ongoing build logs, design drops & tech discussions.", tag: "Social", icon: "x" },
+      { platform: "Discord", handle: "[Username#0000]", url: "https://discord.com/", desc: "Direct chats, community feedback & creative collaboration.", tag: "Chat", icon: "discord" },
+      { platform: "Dribbble", handle: "@[YourPortfolio]", url: "https://dribbble.com/", desc: "Visual explorations, poster design showcases & branding archives.", tag: "Design", icon: "dribbble" },
+    ],
 
     contact: {
       ghost: "Contact",
@@ -1215,9 +1348,10 @@
       subtitle: "Let's Work Together",
       email: "[your.email@example.com]",
       socials: [
-        { label: "[Instagram]", url: "#" },
-        { label: "[Behance]",   url: "#" },
-        { label: "[LinkedIn]",  url: "#" },
+        { label: "GitHub",    url: "https://github.com/goateddhleminh" },
+        { label: "LinkedIn",  url: "#" },
+        { label: "X / Twitter", url: "#" },
+        { label: "Instagram", url: "#" },
       ],
       // image: path to a real QR code PNG/SVG. Leave "" to show the placeholder.
       qr: [
@@ -1228,19 +1362,19 @@
   };
 
   /* ================================================================
-     🌌  ETHREAL AURORA SETTINGS — tweak speed & motion here
+     🌌  ETHREAL AURORA SETTINGS
      ================================================================ */
   const BG_CONFIG = {
-    speedMultiplier: 1,      // 1 = default (24–38s loops)
-    scrollShift: true,       // smoothly shift aurora palette across sections on scroll
-    cursorGlow: true,        // soft radial glow following cursor on desktop
-    cursorSmoothing: 0.65,   // seconds of easing on the cursor glow
+    speedMultiplier: 1,
+    scrollShift: true,
+    cursorGlow: true,
+    cursorSmoothing: 0.65,
     blobs: [
-      { x: 18,  y: 14,  scale: 1.15, rotate: 18,  duration: 25 }, // sky azure
-      { x: -16, y: 18,  scale: 1.20, rotate: -22, duration: 32 }, // lavender mist
-      { x: 20,  y: -16, scale: 1.16, rotate: 15,  duration: 36 }, // rose-quartz
-      { x: -18, y: -14, scale: 1.14, rotate: -16, duration: 29 }, // mint shimmer
-      { x: 14,  y: -18, scale: 1.22, rotate: 24,  duration: 38 }, // champagne sun
+      { x: 18,  y: 14,  scale: 1.15, rotate: 18,  duration: 25 },
+      { x: -16, y: 18,  scale: 1.20, rotate: -22, duration: 32 },
+      { x: 20,  y: -16, scale: 1.16, rotate: 15,  duration: 36 },
+      { x: -18, y: -14, scale: 1.14, rotate: -16, duration: 29 },
+      { x: 14,  y: -18, scale: 1.22, rotate: 24,  duration: 38 },
     ],
   };
 
@@ -1267,11 +1401,22 @@
       return 0.2126 * r + 0.7152 * g + 0.0722 * b;
     };
 
+    // Vector SVGs for Social Platforms
+    function socialIconSVG(name) {
+      const icons = {
+        github: '<svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>',
+        x: '<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+        linkedin: '<svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.79v8.37H6.46v-8.37M7.86 6.3a1.63 1.63 0 0 0-1.63 1.63c0 .9.73 1.63 1.63 1.63.9 0 1.63-.73 1.63-1.63 0-.9-.73-1.63-1.63-1.63Z"/></svg>',
+        discord: '<svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>',
+        dribbble: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm7.65 6.03c-1.25 1.54-3.58 2.21-6.49 2.29-.11-.27-.22-.54-.34-.82-.67-1.54-1.48-3.04-2.42-4.48 1.13-.42 2.35-.65 3.63-.65 2.23 0 4.26.78 5.62 3.66zm-7.65-5.18c.84 1.32 1.57 2.71 2.18 4.14-2.82.26-6.15.26-8.87-.21 1.4-2.38 3.86-3.93 6.69-3.93zm-7.9 5.51c2.81.48 6.27.48 9.21.21.13.3.25.6.37.9-2.92.88-5.32 2.45-6.94 4.54-1.63-1.57-2.64-3.48-2.64-5.65zm1.53 7.42c1.47-1.92 3.67-3.37 6.36-4.18 1.07 2.8 1.83 5.76 2.18 8.78-3.67.66-7.07-1.65-8.54-4.6zm10.15 4.67c-.34-2.82-1.05-5.59-2.05-8.23 2.65-.12 4.79-.76 5.92-2.16 1.05 1.77 1.56 3.82 1.4 5.98-1.07 2.25-3.03 3.9-5.27 4.41z"/></svg>',
+      };
+      return icons[name] || '<svg viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>';
+    }
+
     // Aspect ratio per card group
     const SHAPES = {
-      personal:  { ar: '3 / 4',  arn: 0.75 },
-      freelance: { ar: '3 / 4',  arn: 0.75 },
-      brands:    { ar: '9 / 16', arn: 0.5625 },
+      personal:     { ar: '3 / 4',  arn: 0.75 },
+      achievements: { ar: '3 / 4',  arn: 0.75 },
     };
 
     // Environment checks
@@ -1297,12 +1442,12 @@
       el.innerHTML = `<span>${esc(CONFIG.name)}</span><span>portfolio${esc(CONFIG.year)}</span>`;
     });
 
-    // Halftone corners, injected into every slide card (except Thank You where QR codes sit in bottom corners)
+    // Halftone corners
     const halftone = (side, speed) =>
       `<div class="halftone halftone--${side}" data-parallax="${speed}" aria-hidden="true"><i></i><i></i><i></i><i></i></div>`;
     $$('.slide:not(.slide--contact) .slide-frame').forEach((f) => f.insertAdjacentHTML('afterbegin', halftone('l', -50) + halftone('r', -95)));
 
-    // Hero ghost + title (each "\n" = a new line, revealed one after another)
+    // Hero ghost + title
     $('[data-hero-ghost]').textContent = CONFIG.heroGhost || CONFIG.heroWord.replace(/\n/g, '');
     const heroTitle = $('[data-hero-title]');
     heroTitle.setAttribute('aria-label', CONFIG.heroWord.replace(/\n/g, ' '));
@@ -1310,7 +1455,7 @@
       `<span class="line" aria-hidden="true">${[...line].map((ch) => `<span class="c">${ch === ' ' ? '&nbsp;' : esc(ch)}</span>`).join('')}</span>`
     ).join('');
 
-    // Split section headings into masked words/chars for the reveal
+    // Split section headings into masked words/chars
     $$('.split').forEach((h) => {
       const text = h.textContent.trim();
       h.setAttribute('aria-label', text);
@@ -1319,12 +1464,72 @@
       ).join(' ');
     });
 
-    // Tools
-    $('[data-tools]').innerHTML = CONFIG.tools.map((t) =>
-      `<li class="tool"><span class="tool__icon" aria-hidden="true">${esc(t.abbr)}</span><span class="tool__name">${esc(t.name)}</span></li>`
+    /* ==============================================================
+       INTERACTIVE TOOLS (Skills & Software)
+       ============================================================== */
+    const toolsContainer = $('[data-tools]');
+    const toolDetail = $('#tool-detail');
+    const toolNameEl = $('#tool-detail-name');
+    const toolAbbrEl = $('#tool-detail-abbr');
+    const toolLevelEl = $('#tool-detail-level');
+    const toolDescEl = $('#tool-detail-desc');
+    const toolLinkEl = $('#tool-detail-link');
+
+    toolsContainer.innerHTML = CONFIG.tools.map((t, i) =>
+      `<li>
+        <button class="tool" type="button" data-tool-index="${i}" aria-label="Inspect ${esc(t.name)}">
+          <span class="tool__icon" aria-hidden="true">${esc(t.abbr)}</span>
+          <span class="tool__name">${esc(t.name)}</span>
+        </button>
+      </li>`
     ).join('');
 
-    // Poster art: a real image if provided, otherwise a generated gradient poster
+    let activeToolIdx = null;
+
+    function showToolDetail(idx) {
+      const tool = CONFIG.tools[idx];
+      if (!tool) return;
+      activeToolIdx = idx;
+
+      $$('.tool', toolsContainer).forEach((btn, i) => {
+        btn.classList.toggle('is-active', i === idx);
+      });
+
+      toolNameEl.textContent = tool.name;
+      toolAbbrEl.textContent = tool.abbr;
+      toolLevelEl.textContent = tool.level || 'Featured Skill';
+      toolDescEl.textContent = tool.desc || 'Used across personal projects and client deliverables.';
+      if (tool.url && tool.url !== '#') {
+        toolLinkEl.href = tool.url;
+        toolLinkEl.style.display = 'inline-flex';
+      } else {
+        toolLinkEl.style.display = 'none';
+      }
+
+      if (toolDetail.style.display === 'none') {
+        toolDetail.style.display = 'block';
+        if (MOTION) {
+          gsap.fromTo(toolDetail,
+            { opacity: 0, y: 16, scale: 0.98 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'expo.out' }
+          );
+        }
+      } else if (MOTION) {
+        gsap.fromTo('.tool-detail__inner',
+          { opacity: 0.4, y: 6 },
+          { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }
+        );
+      }
+    }
+
+    toolsContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tool');
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.toolIndex, 10);
+      showToolDetail(idx);
+    });
+
+    // Poster art
     function posterMarkup(p, i, group) {
       if (p.image) return `<img src="${esc(p.image)}" alt="${esc(p.title)} — ${esc(p.category)}" loading="lazy" decoding="async">`;
       const [c1, c2] = p.colors || ['#3B6FD8', '#0B2A5B'];
@@ -1340,9 +1545,10 @@
         </span>`;
     }
 
-    // Cards
+    // Projects & Achievements Cards
     $$('[data-cards]').forEach((row) => {
       const group = row.dataset.cards;
+      if (!CONFIG.projects[group]) return;
       row.innerHTML = CONFIG.projects[group].map((p, i) => `
         <li class="card-item">
           <button class="card" type="button" data-group="${group}" data-index="${i}" aria-haspopup="dialog"
@@ -1362,13 +1568,32 @@
         </li>`).join('');
     });
 
+    // Social Channels Cards
+    const socialCardsContainer = $('[data-social-cards]');
+    if (socialCardsContainer && CONFIG.socials) {
+      socialCardsContainer.innerHTML = CONFIG.socials.map((s) => `
+        <li class="social-item">
+          <a class="social-card" href="${esc(s.url)}" target="_blank" rel="noopener" aria-label="Visit ${esc(s.platform)} (${esc(s.handle)})">
+            <div class="social-card__top">
+              <span class="social-card__icon" aria-hidden="true">${socialIconSVG(s.icon)}</span>
+              <span class="social-card__tag">${esc(s.tag || 'Profile')}</span>
+            </div>
+            <h3 class="social-card__name">${esc(s.platform)}</h3>
+            <p class="social-card__handle">${esc(s.handle)}</p>
+            <p class="social-card__desc">${esc(s.desc)}</p>
+            <div class="social-card__cta">Connect <span>→</span></div>
+          </a>
+        </li>`
+      ).join('');
+    }
+
     // Contact: email links + socials
     $$('[data-email-link]').forEach((a) => (a.href = `mailto:${CONFIG.contact.email}`));
     $('[data-socials]').innerHTML = CONFIG.contact.socials.map((s) =>
       `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
     ).join('');
 
-    // QR placeholders — crisp deep black modules on white glass
+    // QR placeholders
     function qrPlaceholderSVG(seedText) {
       const N = 25;
       let seed = [...seedText].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7);
@@ -1477,7 +1702,6 @@
        MOTION — only transform + opacity are animated
        ============================================================== */
     if (MOTION) {
-      // ---------- Hero intro ----------
       const ghost = $('.slide--hero .ghost');
       const heroLines = $$('.hero-title .line');
       gsap.set(ghost, { opacity: 0, scale: 1.18, yPercent: 6 });
@@ -1504,7 +1728,7 @@
       Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1200))])
         .then(() => { startIntro(); ScrollTrigger.refresh(); });
 
-      // ---------- Slide-to-slide transitions ----------
+      // Slide-to-slide transitions
       $$('.slide:not(.slide--hero) .slide-frame').forEach((frame) => {
         gsap.fromTo(frame,
           { scale: 0.92, opacity: 0.35, transformOrigin: '50% 0%' },
@@ -1520,7 +1744,7 @@
         });
       });
 
-      // ---------- Scroll-triggered reveals ----------
+      // Scroll-triggered reveals
       $$('.split').forEach((h) => {
         gsap.from($$('.c', h), {
           yPercent: 115, duration: 1.1, ease: 'expo.out', stagger: 0.028,
@@ -1534,7 +1758,7 @@
         });
       });
       $$('[data-stagger]').forEach((group) => {
-        const isCards = group.classList.contains('card-row');
+        const isCards = group.classList.contains('card-row') || group.classList.contains('social-row');
         gsap.from(group.children, {
           opacity: 0, y: isCards ? 90 : 30, scale: isCards ? 0.94 : 1,
           duration: isCards ? 1.2 : 0.9, ease: 'expo.out', stagger: isCards ? 0.09 : 0.06,
@@ -1548,7 +1772,7 @@
         });
       });
 
-      // ---------- Parallax: ghost text + halftones move at their own speeds ----------
+      // Parallax
       $$('[data-parallax]').forEach((el) => {
         const travel = parseFloat(el.dataset.parallax) || 0;
         const slide = el.closest('.slide');
@@ -1559,7 +1783,7 @@
             scrollTrigger: { trigger: slide, start: isHero ? 'top top' : 'top bottom', end: 'bottom top', scrub: true } });
       });
 
-      // ---------- Aurora Background: 24–38s blob drift + scroll-reactive color shift ----------
+      // Aurora background drift
       const isMobileBG = window.matchMedia('(max-width: 767px)').matches;
       const mult = BG_CONFIG.speedMultiplier || 1;
       $$('.aurora-blob').forEach((blob, i) => {
@@ -1577,7 +1801,7 @@
         });
       });
 
-      // Faint floating light motes
+      // Light motes
       $$('.aurora-mote').forEach((mote, i) => {
         if (isMobileBG && i >= 3) return;
         gsap.to(mote, {
@@ -1613,7 +1837,7 @@
           .to('.aurora-streak', { yPercent: 14, rotation: 4, duration: 2, ease: 'none' }, 0);
       }
 
-      // Desktop-only soft cursor radial glow
+      // Cursor glow
       if (BG_CONFIG.cursorGlow && finePointer && !isMobileBG) {
         const glow = $('.aurora-cursor-glow');
         if (glow) {
@@ -1669,9 +1893,9 @@
     }
 
     /* ==============================================================
-       MOUSE DRAG for overflowing card rows (touch uses native swipe)
+       MOUSE DRAG for overflowing card & social rows
        ============================================================== */
-    $$('.card-row').forEach((row) => {
+    $$('.card-row, .social-row').forEach((row) => {
       let down = false, moved = false, startX = 0, startLeft = 0;
       row.addEventListener('pointerdown', (e) => {
         if (e.pointerType !== 'mouse' || row.scrollWidth <= row.clientWidth) return;
@@ -1696,7 +1920,7 @@
     });
 
     /* ==============================================================
-       LIGHTBOX — FLIP from the card into the dialog and back
+       LIGHTBOX — FLIP from card into dialog
        ============================================================== */
     const lb = $('#lightbox');
     const lbPoster = $('.lb-poster', lb);
@@ -1712,7 +1936,7 @@
     function fillLightbox() {
       const items = CONFIG.projects[lbGroup];
       const p = items[lbIndex];
-      const shape = SHAPES[lbGroup];
+      const shape = SHAPES[lbGroup] || { ar: '3 / 4', arn: 0.75 };
       lbPoster.style.setProperty('--ar', shape.ar);
       lbPoster.style.setProperty('--arn', shape.arn);
       lbPoster.innerHTML = posterMarkup(p, lbIndex, lbGroup);
@@ -1805,6 +2029,9 @@
     $('[data-lb-prev]', lb).addEventListener('click', () => stepLightbox(-1));
     $('[data-lb-next]', lb).addEventListener('click', () => stepLightbox(1));
     lb.addEventListener('cancel', (e) => { e.preventDefault(); closeLightbox(); });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lb.open) { e.preventDefault(); closeLightbox(); }
+    });
     lb.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') stepLightbox(1);
       if (e.key === 'ArrowLeft') stepLightbox(-1);
@@ -1844,7 +2071,7 @@
       }, { passive: true });
       document.addEventListener('pointerleave', () => cursorEl.classList.add('is-hidden'));
       document.addEventListener('pointerover', (e) => {
-        const onCard = !!e.target.closest('.card');
+        const onCard = !!e.target.closest('.card, .social-card');
         const onLink = !onCard && !!e.target.closest('a, button, [data-magnetic]');
         ring.classList.toggle('is-card', onCard);
         ring.classList.toggle('is-link', onLink);
