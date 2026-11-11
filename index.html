@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <!-- ============================================================
+       SEO / SOCIAL — edit these by hand (crawlers don't run JS)
+       ============================================================ -->
+  <title>[Your Name] — Portfolio</title>
+  <meta name="description" content="Portfolio of [Your Name], [Your Role]. Personal projects, freelance work and brand collaborations." />
+  <meta name="theme-color" content="#0B2A5B" />
+  <link rel="canonical" href="https://example.com/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="[Your Name] — Portfolio" />
+  <meta property="og:description" content="Portfolio of [Your Name], [Your Role]." />
+  <meta property="og:url" content="https://example.com/" />
+  <!-- Add a 1200×630 preview image when you have one: -->
+  <!-- <meta property="og:image" content="https://example.com/og-image.jpg" /> -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="[Your Name] — Portfolio" />
+  <meta name="twitter:description" content="Portfolio of [Your Name], [Your Role]." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B2A5B'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-family='Impact,sans-serif' font-size='38' fill='white'%3EP%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fonts: tall condensed display + elegant serif (with system fallbacks in CSS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
+
+  <!-- Hide the hero until the intro animation is ready (auto-removed after 3s as a safety net) -->
+  <script>
+    document.documentElement.classList.add('js', 'js-intro');
+    setTimeout(function () { document.documentElement.classList.remove('js-intro'); }, 3000);
+  </script>
+
+  <style>
+    /* ==========================================================
+       1. DESIGN & AURORA TOKENS — matched to reference slide UI
+          • Outer backdrop: Deep Navy (#0B2A5B) → Royal (#3B6FD8) → Periwinkle (#C2C8F8)
+          • Each Slide Stage: Periwinkle (#94AAF3) → Royal (#3B6FD8) → Deep Navy (#153B7D)
+       ========================================================== */
+    :root {
+      /* --- Reference Blue-Periwinkle Palette --- */
+      --navy:             #0B2A5B;   /* deep navy */
+      --navy-deep:        #071C3F;   /* top outer backdrop */
+      --navy-slide-bot:   #153B7D;   /* bottom of each slide card */
+      --royal:            #3B6FD8;   /* royal blue core */
+      --cornflower:       #5A87E6;   /* upper-mid slide blue */
+      --periwinkle:       #92A8F3;   /* top of each slide card */
+      --periwinkle-light: #C2C8F8;   /* bottom outer backdrop */
+
+      /* --- Aurora Atmospheric Blobs (harmonized blue/periwinkle) --- */
+      --bg-base:    #0B2A5B;
+      --bg-tint:    #1E4C9A;
+      --aurora-1:   #4A7CE8;   /* royal cobalt glow */
+      --aurora-2:   #94AAF3;   /* soft periwinkle glow */
+      --aurora-3:   #6A96F2;   /* luminous cornflower */
+      --aurora-4:   #7AA7FF;   /* sky sapphire */
+      --aurora-5:   #BDC7FA;   /* pale periwinkle mist */
+
+      /* --- Aurora Layer Tuning --- */
+      --blob-opacity:  0.42;
+      --blob-blur:     68px;
+      --grain-opacity: 0.038;
+      --cursor-glow:   rgba(148, 170, 243, 0.26);
+      --streak-color:  rgba(255, 255, 255, 0.14);
+      --mote-color:    rgba(255, 255, 255, 0.65);
+
+      /* --- Crisp White Typography (matching reference image) --- */
+      --text:       #FFFFFF;
+      --text-soft:  rgba(255, 255, 255, 0.92);
+      --text-faint: rgba(255, 255, 255, 0.74);
+
+      /* --- Slide Stage, Ghost & White Halftone Dots --- */
+      --slide-bg: linear-gradient(180deg,
+        var(--periwinkle) 0%,
+        var(--cornflower) 34%,
+        var(--royal) 68%,
+        var(--navy-slide-bot) 100%);
+      --slide-shadow: 0 34px 80px -20px rgba(4, 14, 38, 0.68), 0 14px 32px -12px rgba(4, 14, 38, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.18);
+      --glass:          rgba(255, 255, 255, 0.14);
+      --glass-strong:   rgba(9, 28, 66, 0.78);
+      --glass-border:   rgba(255, 255, 255, 0.28);
+      --ghost:          rgba(255, 255, 255, 0.16);
+      --dot:            rgba(255, 255, 255, 0.82); /* white halftone dots in slide corners */
+      --line-color:     rgba(255, 255, 255, 0.82);
+      --title-shadow:   rgba(8, 24, 62, 0.26);
+      --cap-shadow:     rgba(8, 24, 62, 0.72);
+      --btn-bg:         #FFFFFF;
+      --btn-text:       #0B2A5B;
+
+      /* --- Poster Card Shadows --- */
+      --shadow-card:       0 20px 38px -12px rgba(4, 14, 38, 0.62), 0 6px 14px -4px rgba(4, 14, 38, 0.38);
+      --shadow-card-hover: 0 40px 68px -16px rgba(3, 10, 30, 0.78), 0 20px 34px -12px rgba(3, 10, 30, 0.58);
+
+      /* Type */
+      --font-display: "Big Shoulders Display", "Bebas Neue", "Anton", "Oswald", Impact, "Arial Narrow", sans-serif;
+      --font-serif: "Cormorant Garamond", "Cormorant", Garamond, "Iowan Old Style", "Times New Roman", serif;
+
+      /* Layout */
+      --gutter: clamp(1rem, 3.5vw, 3rem);
+      --radius-card: 10px;
+      --radius-slide: 6px;
+      --dock-space: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ==========================================================
+       2. RESET + BASE + FIXED PAGE BACKDROP
+       ========================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { background: var(--navy-deep); -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 1.125rem;
+      line-height: 1.55;
+      /* Outer page vertical gradient matching reference: Deep Navy top → Royal mid → Soft Periwinkle bottom */
+      background: linear-gradient(180deg,
+        var(--navy-deep) 0%,
+        var(--navy) 18%,
+        #1F4E9E 38%,
+        var(--royal) 60%,
+        #7B97E9 82%,
+        var(--periwinkle-light) 100%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Fixed layered Aurora glow over the page backdrop (60fps: transform & opacity only) */
+    .aurora-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      isolation: isolate;
+      background: transparent;
+    }
+
+    /* Scroll-reactive ambient stage washes (cross-faded via ScrollTrigger) */
+    .aurora-wash {
+      position: absolute;
+      inset: -12%;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .aurora-wash--hero {
+      opacity: 0.9;
+      background:
+        radial-gradient(58% 52% at 22% 26%, color-mix(in oklab, var(--aurora-1) 52%, transparent) 0%, transparent 72%),
+        radial-gradient(54% 48% at 78% 34%, color-mix(in oklab, var(--aurora-2) 48%, transparent) 0%, transparent 72%);
+    }
+    .aurora-wash--mid {
+      background:
+        radial-gradient(60% 54% at 72% 38%, color-mix(in oklab, var(--aurora-3) 55%, transparent) 0%, transparent 72%),
+        radial-gradient(52% 46% at 26% 64%, color-mix(in oklab, var(--aurora-5) 52%, transparent) 0%, transparent 70%),
+        radial-gradient(48% 44% at 50% 22%, color-mix(in oklab, var(--aurora-2) 38%, transparent) 0%, transparent 70%);
+    }
+    .aurora-wash--end {
+      background:
+        radial-gradient(60% 54% at 28% 36%, color-mix(in oklab, var(--aurora-4) 58%, transparent) 0%, transparent 72%),
+        radial-gradient(56% 50% at 76% 68%, color-mix(in oklab, var(--aurora-1) 50%, transparent) 0%, transparent 72%),
+        radial-gradient(46% 42% at 52% 50%, color-mix(in oklab, var(--aurora-2) 40%, transparent) 0%, transparent 70%);
+    }
+
+    /* Pre-blurred drifting aurora blobs (animated with transform & opacity only) */
+    .aurora-blobs {
+      position: absolute;
+      inset: 0;
+    }
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      opacity: var(--blob-opacity);
+      filter: blur(var(--blob-blur));
+      will-change: transform, opacity;
+      transform: translate3d(0, 0, 0);
+      background: radial-gradient(circle at 50% 50%,
+        var(--c) 0%,
+        color-mix(in oklab, var(--c) 68%, transparent) 36%,
+        color-mix(in oklab, var(--c) 22%, transparent) 62%,
+        transparent 76%);
+    }
+    .aurora-blob--1 { --c: var(--aurora-1); width: min(62vw, 760px); height: min(62vw, 760px); top: -16%; left: -10%; }
+    .aurora-blob--2 { --c: var(--aurora-2); width: min(56vw, 680px); height: min(56vw, 680px); top: 6%;  right: -12%; }
+    .aurora-blob--3 { --c: var(--aurora-3); width: min(54vw, 650px); height: min(54vw, 650px); bottom: -18%; left: 14%; }
+    .aurora-blob--4 { --c: var(--aurora-4); width: min(50vw, 610px); height: min(50vw, 610px); bottom: 4%; right: 6%; }
+    .aurora-blob--5 { --c: var(--aurora-5); width: min(44vw, 520px); height: min(44vw, 520px); top: 36%; left: 32%; opacity: calc(var(--blob-opacity) * 0.72); }
+
+    /* Subtle glass-like diagonal light streak */
+    .aurora-streak {
+      position: absolute;
+      inset: -20%;
+      background:
+        linear-gradient(118deg,
+          transparent 36%,
+          var(--streak-color) 48.5%,
+          rgba(255, 255, 255, 0.14) 52%,
+          transparent 62%);
+      opacity: 0.45;
+      will-change: transform;
+    }
+
+    /* Faint floating light particles / motes */
+    .aurora-motes {
+      position: absolute;
+      inset: 0;
+    }
+    .aurora-mote {
+      position: absolute;
+      width: var(--sz, 10px);
+      height: var(--sz, 10px);
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--mote-color) 0%, transparent 72%);
+      opacity: 0.28;
+      will-change: transform, opacity;
+    }
+
+    /* Desktop cursor radial glow (moved via GSAP quickTo x/y) */
+    .aurora-cursor-glow {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 620px;
+      height: 620px;
+      margin-left: -310px;
+      margin-top: -310px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        var(--cursor-glow) 0%,
+        color-mix(in oklab, var(--aurora-2) 16%, transparent) 38%,
+        transparent 70%);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    /* Fine SVG feTurbulence grain overlay (3–6% opacity) */
+    .aurora-grain {
+      position: absolute;
+      inset: 0;
+      opacity: var(--grain-opacity);
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* Mobile (<768px): reduce to 3 blobs, lower blur size, remove cursor glow */
+    @media (max-width: 767px) {
+      :root { --blob-blur: 36px; }
+      .aurora-blob--4,
+      .aurora-blob--5,
+      .aurora-cursor-glow,
+      .aurora-mote:nth-child(n+4) { display: none !important; }
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; }
+    h1, h2, h3, p, figure { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+
+    ::selection { background: var(--navy); color: #fff; }
+
+    /* Visible, consistent focus ring for keyboard users */
+    :focus-visible { outline: 2px solid var(--text); outline-offset: 4px; border-radius: 6px; }
+
+    .sr-only {
+      position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .skip-link {
+      position: fixed; top: 1rem; left: 1rem; z-index: 1000;
+      padding: .7rem 1.1rem; border-radius: 999px;
+      background: var(--navy); color: #fff; font-weight: 700; text-decoration: none;
+      transform: translateY(-200%); transition: transform .3s var(--ease-out);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* Lenis recommended styles */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    html.modal-open { overflow: hidden; }
+
+    /* ==========================================================
+       3. SLIDE (SECTION) SHELL & FRAMED SLIDE STAGE
+          Matches the reference presentation-slide UI:
+          each section centers a framed 16:9 slide stage with a
+          Periwinkle → Royal Blue → Deep Navy internal gradient.
+       ========================================================== */
+    .slide {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 4vh, 3.25rem) var(--gutter) var(--dock-space);
+      isolation: isolate;
+    }
+
+    .slide-frame {
+      position: relative;
+      z-index: 1;
+      width: min(94vw, 1140px);
+      min-height: clamp(480px, 76svh, 690px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(4rem, 8vh, 5.5rem) clamp(1.5rem, 4.5vw, 4rem) clamp(3rem, 6vh, 4.5rem);
+      border-radius: var(--radius-slide);
+      background: var(--slide-bg);
+      box-shadow: var(--slide-shadow);
+      overflow: hidden;
+      overflow: clip;
+      isolation: isolate;
+      will-change: transform, opacity;
+    }
+    /* Subtle top specular sheen on each slide card */
+    .slide-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(75% 42% at 50% 0%, rgba(255, 255, 255, 0.22), transparent 70%),
+        radial-gradient(60% 50% at 50% 100%, rgba(7, 24, 62, 0.28), transparent 72%);
+    }
+
+    .slide-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1020px;
+      text-align: center;
+      will-change: transform, opacity;
+    }
+
+    /* Tiny header row inside each slide: [Your Name] ........ portfolio[Year] */
+    .slide-head {
+      position: absolute;
+      top: clamp(1.1rem, 2.8vh, 1.85rem);
+      left: clamp(1.4rem, 3.8vw, 3.2rem);
+      right: clamp(1.4rem, 3.8vw, 3.2rem);
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(.85rem, 1.15vw, 1.05rem);
+      letter-spacing: .03em;
+      color: var(--text-soft);
+    }
+
+    /* Section titles — tall, condensed white matching reference */
+    .title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(3rem, 7.5vw, 5.8rem);
+      line-height: .9;
+      letter-spacing: -0.005em;
+      filter: drop-shadow(0 8px 24px var(--title-shadow));
+    }
+    .title-rule {
+      display: block;
+      width: min(68%, 280px);
+      height: 1px;
+      margin: .55rem auto 0;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .lede {
+      max-width: 38rem;
+      margin: clamp(1rem, 2.2vh, 1.5rem) auto 0;
+      font-size: clamp(1.08rem, 1.45vw, 1.32rem);
+      line-height: 1.52;
+      color: var(--text);
+      text-wrap: pretty;
+    }
+    .signature { margin-top: 1.25rem; font-style: italic; font-size: 1.08rem; color: var(--text-soft); }
+
+    /* Split-text helpers (filled by JS) */
+    .split .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .015em .12em; margin-bottom: -.12em; }
+    .split .c { display: inline-block; will-change: transform; }
+
+    /* ==========================================================
+       4. HALFTONE CORNERS (45° staggered screen-print dot grid)
+          Matches the dense-to-sparse diagonal white halftone
+          corners in the reference image.
+       ========================================================== */
+    .halftone {
+      position: absolute;
+      bottom: -80px;
+      z-index: 1;
+      pointer-events: none;
+      width: min(44vw, 430px);
+      aspect-ratio: 1.15;
+      will-change: transform;
+    }
+    .halftone--l { left: 0;  --ox: 0%; }
+    .halftone--r { right: 0; --ox: 100%; }
+    .halftone i {
+      position: absolute;
+      inset: 0;
+      /* Two offset radial-gradients form a 45° rotated halftone dot grid */
+      background-image:
+        radial-gradient(circle, var(--dot) var(--r), transparent calc(var(--r) + .65px)),
+        radial-gradient(circle, var(--dot) var(--r), transparent calc(var(--r) + .65px));
+      background-size: 11px 11px;
+      background-position: 0 0, 5.5px 5.5px;
+      -webkit-mask-image: radial-gradient(ellipse farthest-side at var(--ox) 100%, var(--m));
+              mask-image: radial-gradient(ellipse farthest-side at var(--ox) 100%, var(--m));
+    }
+    .halftone i:nth-child(1) { --r: 3.9px; --m: #000 0%, #000 18%, transparent 32%; }
+    .halftone i:nth-child(2) { --r: 2.9px; --m: transparent 15%, #000 26%, #000 38%, transparent 52%; }
+    .halftone i:nth-child(3) { --r: 2.0px; --m: transparent 34%, #000 46%, #000 58%, transparent 72%; }
+    .halftone i:nth-child(4) { --r: 1.1px; --m: transparent 54%, #000 66%, transparent 86%; }
+
+    /* ==========================================================
+       5. HERO
+       ========================================================== */
+    .ghost-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      user-select: none;
+      will-change: transform;
+    }
+    .ghost {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(9.5rem, 25vw, 22rem);
+      line-height: .78;
+      letter-spacing: -0.01em;
+      scale: 1 1.36;
+      color: var(--ghost);
+      white-space: nowrap;
+      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, .95) 20%, rgba(0, 0, 0, .35) 95%);
+              mask-image: linear-gradient(180deg, rgba(0, 0, 0, .95) 20%, rgba(0, 0, 0, .35) 95%);
+      will-change: transform, opacity;
+    }
+    .hero-lockup { position: relative; display: inline-flex; flex-direction: column; align-items: stretch; }
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(5.2rem, 16vw, 13.5rem);
+      line-height: .82;
+      letter-spacing: -0.005em;
+      filter: drop-shadow(0 12px 32px var(--title-shadow));
+    }
+    .hero-title .line { display: block; overflow: hidden; padding-bottom: .04em; }
+    .hero-title .c { display: inline-block; will-change: transform; }
+    .hero-sub { display: flex; align-items: center; gap: 1rem; margin-top: clamp(.45rem, 1.2vw, .95rem); }
+    .hero-line { flex: 1; height: 1.5px; background: var(--line-color); transform-origin: left center; }
+    .hero-role { font-style: italic; font-weight: 500; font-size: clamp(1.15rem, 2vw, 1.65rem); line-height: 1; white-space: nowrap; }
+
+    .scroll-cue {
+      position: absolute;
+      left: 50%;
+      bottom: 1.15rem;
+      z-index: 3;
+      translate: -50% 0;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .45rem;
+      padding: .35rem .85rem;
+      border: 0;
+      background: none;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: .75rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .scroll-cue__track { position: relative; width: 1px; height: 32px; background: rgba(255, 255, 255, 0.32); overflow: hidden; }
+    .scroll-cue__track::after {
+      content: ""; position: absolute; inset: 0; background: #fff;
+      transform-origin: top; animation: cue 2.2s var(--ease-out) infinite;
+    }
+    @keyframes cue {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      45%  { transform: scaleY(1); transform-origin: top; }
+      55%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* Hidden until the intro is ready */
+    .js-intro .slide--hero .ghost,
+    .js-intro .slide--hero .slide-frame,
+    .js-intro .dock { opacity: 0; }
+
+    /* ==========================================================
+       6. SKILLS
+       ========================================================== */
+    .tools {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem;
+      max-width: 46rem; margin: clamp(1.5rem, 4vh, 2.4rem) auto 0;
+    }
+    .tool {
+      display: inline-flex; align-items: center; gap: .65rem;
+      padding: .42rem 1.15rem .42rem .42rem; border-radius: 999px;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 24px -10px rgba(11, 27, 77, 0.12);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      transition: transform .45s var(--ease-out), border-color .3s;
+    }
+    .tool:hover { transform: translateY(-3px); border-color: var(--line-color); }
+    .tool__icon {
+      width: 2.15rem; height: 2.15rem; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--btn-bg); color: var(--btn-text);
+      font-family: var(--font-display); font-weight: 800; font-size: .95rem; letter-spacing: .04em;
+    }
+    .tool__name { font-weight: 700; font-size: 1.05rem; }
+
+    /* ==========================================================
+       7. POSTER CARDS
+          Mobile-first: swipeable scroll-snap carousel.
+          ≥768px: centered row.
+       ========================================================== */
+    .card-row {
+      --mw: 60vw;                       /* mobile card width */
+      --w: clamp(136px, 15.2vw, 204px); /* desktop card width (fits 4 comfortably inside slide) */
+      --ar: 3 / 4;
+      display: flex; gap: 1rem;
+      margin: clamp(1.4rem, 3.6vh, 2.4rem) calc(var(--gutter) * -1) 0;
+      padding: 1.25rem calc(50vw - var(--mw) / 2) 1rem;
+      overflow-x: auto; overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      user-select: none;
+    }
+    .card-row::-webkit-scrollbar { display: none; }
+    .card-row.is-dragging { scroll-snap-type: none; cursor: grabbing; }
+    .card-row--sm     { --mw: 52vw; --w: clamp(122px, 13.5vw, 182px); }
+    .card-row--narrow { --mw: 40vw; --w: clamp(102px, 11.2vw, 152px); --ar: 9 / 16; }
+
+    .card-item { flex: 0 0 var(--mw); scroll-snap-align: center; }
+
+    .swipe-hint {
+      margin-top: .4rem; font-style: italic; font-size: .95rem; color: var(--text-soft);
+    }
+
+    @media (min-width: 768px) {
+      .card-row {
+        justify-content: center; gap: clamp(1rem, 2.2vw, 2rem);
+        margin-inline: 0; padding-inline: 0;
+        overflow: visible; scroll-snap-type: none;
+        -webkit-mask-image: none; mask-image: none;
+      }
+      .card-item { flex-basis: var(--w); }
+      .swipe-hint { display: none; }
+    }
+
+    .card {
+      display: block; width: 100%; padding: 0; border: 0; background: none;
+      cursor: pointer; perspective: 1000px; border-radius: var(--radius-card);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card:focus-visible { outline: none; }
+    .card:focus-visible .card-media { outline: 2px solid var(--text); outline-offset: 5px; }
+    .card-tilt { display: block; position: relative; transform-style: preserve-3d; will-change: transform; }
+    .card-shadow {
+      position: absolute; inset: 0; border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card-hover);
+      opacity: 0; transition: opacity .5s var(--ease-out);
+    }
+    .card.is-hover .card-shadow { opacity: 1; }
+    .card-media {
+      display: block; position: relative;
+      aspect-ratio: var(--ar);
+      border-radius: var(--radius-card); overflow: hidden;
+      box-shadow: var(--shadow-card);
+      container-type: inline-size;
+      transform: translateZ(0);
+    }
+    .card-media img { width: 100%; height: 100%; object-fit: cover; }
+    .card-glare {
+      position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; z-index: 3;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, .38), transparent 32%);
+      opacity: 0; transition: opacity .4s; pointer-events: none; mix-blend-mode: soft-light;
+    }
+    .card.is-hover .card-glare { opacity: 1; }
+
+    @media (hover: none) {
+      .card-tilt { transition: transform .35s var(--ease-out); }
+      .card:active .card-tilt { transform: scale(.97); }
+    }
+
+    .card-cap {
+      display: none; /* Poster cards display their title on the artwork and in the lightbox, matching reference slide UI */
+      margin-top: .75rem; line-height: 1.25; text-align: center;
+      text-shadow: 0 1px 10px var(--cap-shadow);
+    }
+    .card-cap__title { display: block; font-weight: 700; font-size: 1.02rem; }
+    .card-cap__meta { display: block; font-style: italic; font-size: .92rem; color: var(--text-soft); }
+    .card-row--narrow .card-cap__title { font-size: .95rem; }
+    .card-row--narrow .card-cap__meta { font-size: .85rem; }
+
+    /* ---------- Placeholder poster art (gradient + shapes) ---------- */
+    .poster {
+      position: absolute; inset: 0; isolation: isolate; overflow: hidden;
+      display: flex; flex-direction: column; padding: 8cqi;
+      background: linear-gradient(165deg, var(--c1) 0%, var(--c2) 100%);
+      color: var(--ink); text-align: left;
+    }
+    .poster__top {
+      position: relative; z-index: 2; display: flex; justify-content: space-between; gap: 4cqi;
+      font-family: var(--font-serif); font-weight: 700; font-size: 5.4cqi; line-height: 1;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .poster__title {
+      position: relative; z-index: 2; margin-top: auto;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 14cqi; line-height: 1.08; text-transform: uppercase; overflow-wrap: anywhere;
+    }
+    .poster__foot {
+      position: relative; z-index: 2; margin-top: 4cqi;
+      display: flex; justify-content: space-between; gap: 4cqi;
+      font-family: var(--font-serif); font-style: italic; font-size: 5.2cqi; line-height: 1.1;
+    }
+    .poster__shape { position: absolute; z-index: 1; border-radius: 50%; }
+    .poster__dots {
+      position: absolute; inset: 0; z-index: 1;
+      background-image: radial-gradient(circle, var(--ink) 0 1px, transparent 1.5px);
+      background-size: 7px 7px; opacity: .16;
+      -webkit-mask-image: linear-gradient(to top, #000, transparent 60%);
+              mask-image: linear-gradient(to top, #000, transparent 60%);
+    }
+    /* Variant 0 — big sun + small dot */
+    .poster--v0 .poster__shape--a { width: 95cqi; height: 95cqi; top: -28cqi; right: -35cqi; background: color-mix(in oklab, var(--c2) 55%, #fff); opacity: .55; }
+    .poster--v0 .poster__shape--b { width: 34cqi; height: 34cqi; top: 42cqi; left: 10cqi; background: var(--ink); opacity: .12; }
+    /* Variant 1 — centered ring */
+    .poster--v1 .poster__shape--a { width: 72cqi; height: 72cqi; top: 24cqi; left: 14cqi; border: 2.4cqi solid var(--ink); opacity: .22; }
+    .poster--v1 .poster__shape--b { width: 30cqi; height: 30cqi; top: 45cqi; left: 35cqi; background: color-mix(in oklab, var(--c1) 50%, #fff); opacity: .75; }
+    .poster--v1 .poster__title { text-align: center; }
+    /* Variant 2 — diagonal band, title on top */
+    .poster--v2 .poster__shape--a { border-radius: 0; width: 170cqi; height: 36cqi; top: 52%; left: -35cqi; transform: rotate(-18deg); background: color-mix(in oklab, var(--c2) 70%, #000); opacity: .35; }
+    .poster--v2 .poster__shape--b { width: 22cqi; height: 22cqi; bottom: 18cqi; right: 10cqi; background: var(--ink); opacity: .2; }
+    .poster--v2 .poster__title { margin-top: 6cqi; }
+    .poster--v2 .poster__foot { margin-top: auto; }
+    /* Variant 3 — arch + sun */
+    .poster--v3 .poster__shape--a { border-radius: 999px 999px 0 0; width: 70cqi; height: 92cqi; bottom: 0; left: 15cqi; background: color-mix(in oklab, var(--c1) 55%, #fff); opacity: .45; }
+    .poster--v3 .poster__shape--b { width: 22cqi; height: 22cqi; top: 30cqi; left: 39cqi; background: var(--ink); opacity: .18; }
+
+    /* ==========================================================
+       8. CONTACT (THANK YOU SLIDE — matches reference bottom slide)
+       ========================================================== */
+    .slide--contact .ghost { color: rgba(255, 255, 255, 0.10); font-size: clamp(8rem, 23vw, 21rem); }
+    .contact-stage {
+      display: grid;
+      gap: 1.75rem;
+      align-items: end;
+      grid-template-areas:
+        "main main"
+        "qrl  qrr";
+      width: 100%;
+      min-height: clamp(320px, 52svh, 460px);
+      padding-top: clamp(1.5rem, 4vh, 3rem);
+    }
+    .contact-main {
+      grid-area: main;
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .qr--l { grid-area: qrl; justify-self: center; }
+    .qr--r { grid-area: qrr; justify-self: center; }
+    @media (min-width: 820px) {
+      .contact-stage {
+        grid-template-columns: 160px 1fr 160px;
+        grid-template-areas: "qrl main qrr";
+      }
+      .qr--l { justify-self: start; }
+      .qr--r { justify-self: end; }
+    }
+    .contact-title { font-size: clamp(3.8rem, 10vw, 7.2rem); line-height: .88; }
+    .contact-sub { margin-top: .45rem; font-size: clamp(1.25rem, 2.1vw, 1.65rem); font-weight: 600; }
+    .contact-bottom {
+      margin-top: clamp(2rem, 5vh, 3.5rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .65rem;
+    }
+    .email-line {
+      display: inline-block;
+      font-size: clamp(1rem, 1.4vw, 1.18rem);
+      font-weight: 600;
+      text-decoration: none;
+      background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+      padding-bottom: 2px;
+    }
+    .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem 1.1rem; }
+    .socials a { font-size: .96rem; text-decoration: none; opacity: .9; transition: opacity .25s; }
+    .socials a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .55rem; margin-top: .5rem;
+      padding: .75rem 1.45rem; border-radius: 999px;
+      background: var(--btn-bg); color: var(--btn-text); text-decoration: none; border: 0; cursor: pointer;
+      font-family: var(--font-display); font-weight: 800; font-size: .92rem; letter-spacing: .14em; text-transform: uppercase;
+      box-shadow: 0 12px 28px -10px rgba(4, 14, 38, 0.55);
+      transition: box-shadow .3s;
+    }
+    .btn:hover { box-shadow: 0 18px 36px -10px rgba(4, 14, 38, 0.72); }
+    .btn__arrow { display: inline-block; transition: transform .4s var(--ease-out); }
+    .btn:hover .btn__arrow { transform: translateX(4px); }
+    .btn--ghost { background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, .5); box-shadow: none; }
+
+    .qr { display: flex; flex-direction: column; align-items: center; gap: .45rem; }
+    .qr__label { font-weight: 600; font-size: .88rem; letter-spacing: .02em; color: var(--text-soft); }
+    .qr__code {
+      position: relative; width: clamp(92px, 10vw, 122px); aspect-ratio: 1;
+      padding: 6px; border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 30px -12px rgba(4, 14, 38, 0.55);
+    }
+    .qr__code svg, .qr__code img { width: 100%; height: 100%; }
+    .qr__badge {
+      position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+      padding: .16rem .45rem; border-radius: 999px;
+      background: var(--navy); color: #fff;
+      font-family: var(--font-display); font-weight: 800; font-size: .64rem; letter-spacing: .1em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .qr__note { font-style: italic; font-size: .78rem; color: var(--text-faint); }
+
+    /* ==========================================================
+       9. FLOATING DOCK NAV + PROGRESS BAR
+       ========================================================== */
+    .progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 200;
+      background: linear-gradient(90deg, var(--navy), var(--aurora-1), var(--aurora-2), var(--aurora-3));
+      transform: scaleX(0); transform-origin: left center; pointer-events: none;
+    }
+    .dock {
+      position: fixed; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 150;
+      translate: -50% 0;
+      max-width: calc(100vw - 1.5rem);
+      padding: .35rem; border-radius: 999px;
+      background: var(--glass-strong);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, .18);
+      -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%);
+      box-shadow: 0 20px 50px -20px rgba(4, 14, 36, .45), inset 0 1px 0 rgba(255, 255, 255, .14);
+    }
+    .dock ul {
+      position: relative; display: flex; gap: .1rem;
+      overflow-x: auto; scrollbar-width: none; border-radius: 999px;
+    }
+    .dock ul::-webkit-scrollbar { display: none; }
+    .dock__indicator {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 100px;
+      border-radius: 999px; background: rgba(255, 255, 255, .18);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+      transform-origin: left center; pointer-events: none;
+      opacity: 0; transition: opacity .3s;
+    }
+    .dock__indicator.is-ready { opacity: 1; }
+    .dock a {
+      position: relative; z-index: 1; display: block; white-space: nowrap;
+      padding: .6rem .95rem; border-radius: 999px; text-decoration: none;
+      font-family: var(--font-display); font-weight: 700; font-size: .85rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      opacity: .76; transition: opacity .3s;
+    }
+    .dock a:hover, .dock a[aria-current="true"] { opacity: 1; }
+    .dock a:focus-visible { outline-color: #fff; outline-offset: -2px; border-radius: 999px; }
+
+    /* ==========================================================
+       10. CUSTOM CURSOR (desktop, fine pointers only — enabled by JS)
+       ========================================================== */
+    .cursor { display: none; }
+    html.has-cursor, html.has-cursor * { cursor: none !important; }
+    html.has-cursor .cursor { display: block; }
+    .cursor-dot, .cursor-ring {
+      position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
+    }
+    .cursor-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text); transition: background-color .25s; }
+    .cursor-ring { width: 38px; height: 38px; }
+    .cursor-ring__circle {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1.25px solid color-mix(in oklab, var(--text) 68%, transparent);
+      transition: transform .45s var(--ease-out), opacity .3s, background-color .3s, border-color .3s;
+    }
+    .cursor-ring__label {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      color: #fff;
+      font-family: var(--font-display); font-weight: 800; font-size: .62rem; letter-spacing: .16em;
+      text-transform: uppercase; opacity: 0; transition: opacity .25s;
+    }
+    .cursor-ring.is-link .cursor-ring__circle { transform: scale(1.5); background: color-mix(in oklab, var(--text) 10%, transparent); }
+    .cursor-ring.is-card .cursor-ring__circle { transform: scale(2.1); background: rgba(11, 27, 77, .82); border-color: rgba(255, 255, 255, .92); }
+    .cursor-ring.is-card ~ .cursor-dot { background: #fff; }
+    .cursor-ring.is-card .cursor-ring__label { opacity: 1; }
+    .cursor.is-hidden { opacity: 0; }
+    .lightbox .cursor-dot { background: #fff; }
+    .lightbox .cursor-ring__circle { border-color: rgba(255, 255, 255, .75); }
+
+    /* ==========================================================
+       11. LIGHTBOX (native <dialog>)
+       ========================================================== */
+    .lightbox {
+      --text: #ffffff;
+      --text-soft: rgba(255, 255, 255, 0.88);
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      max-width: 100%; max-height: 100%; margin: 0; padding: 0; border: 0;
+      background: transparent; color: #fff; overflow: hidden;
+    }
+    .lightbox::backdrop { background: transparent; }
+    .lb-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(6, 22, 52, .78);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    }
+    .lb-panel {
+      position: relative; height: 100%; overflow-y: auto;
+      display: grid; place-items: center;
+      padding: 5rem var(--gutter) 3rem; pointer-events: none;
+    }
+    .lb-content {
+      pointer-events: auto;
+      display: grid; gap: 1.75rem; justify-items: center; text-align: center;
+      width: 100%; max-width: 1100px;
+    }
+    .lb-poster {
+      --ar: 3 / 4; --arn: .75;
+      position: relative; aspect-ratio: var(--ar);
+      width: min(78vw, calc(56dvh * var(--arn)));
+      border-radius: 18px; overflow: hidden;
+      container-type: inline-size;
+      box-shadow: 0 50px 100px -30px rgba(0, 0, 0, .65);
+      transform-origin: 0 0; will-change: transform;
+    }
+    .lb-poster img { width: 100%; height: 100%; object-fit: cover; }
+    .lb-info { max-width: 28rem; }
+    .lb-count { font-family: var(--font-display); font-weight: 700; letter-spacing: .24em; font-size: .85rem; color: var(--text-soft); }
+    .lb-title { margin-top: .4rem; font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 5vw, 4rem); line-height: .92; }
+    .lb-meta { margin-top: .5rem; font-style: italic; font-size: 1.1rem; color: var(--text-soft); }
+    .lb-desc { margin-top: 1rem; font-size: 1.15rem; }
+    .lb-actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; align-items: center; margin-top: 1.4rem; }
+    .lb-actions .btn { margin-top: 0; }
+    .icon-btn {
+      display: inline-grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%;
+      background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .3); cursor: pointer;
+      transition: background-color .3s, border-color .3s;
+    }
+    .icon-btn:hover { background: rgba(255, 255, 255, .2); border-color: rgba(255, 255, 255, .6); }
+    .icon-btn svg { width: 1.2rem; height: 1.2rem; }
+    .lb-close { position: fixed; top: 1.1rem; right: 1.1rem; z-index: 2; pointer-events: auto; }
+    @media (min-width: 900px) {
+      .lb-content { grid-template-columns: auto minmax(0, 26rem); gap: 4rem; justify-content: center; align-items: center; justify-items: start; text-align: left; }
+      .lb-poster { width: min(40vw, calc(78dvh * var(--arn))); }
+      .lb-actions { justify-content: flex-start; }
+    }
+
+    /* ==========================================================
+       12. RESPONSIVE TWEAKS
+       ========================================================== */
+    @media (max-width: 480px) {
+      .dock a { padding: .55rem .75rem; font-size: .78rem; letter-spacing: .1em; }
+      .slide-head { font-size: .8rem; }
+    }
+
+    /* ==========================================================
+       13. REDUCED MOTION — no smooth scroll, no looping animation
+       ========================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important; scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Fixed layered Aurora background (z-index: -1, pointer-events: none) -->
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-wash aurora-wash--hero"></div>
+    <div class="aurora-wash aurora-wash--mid"></div>
+    <div class="aurora-wash aurora-wash--end"></div>
+    <div class="aurora-blobs">
+      <div class="aurora-blob aurora-blob--1"></div>
+      <div class="aurora-blob aurora-blob--2"></div>
+      <div class="aurora-blob aurora-blob--3"></div>
+      <div class="aurora-blob aurora-blob--4"></div>
+      <div class="aurora-blob aurora-blob--5"></div>
+    </div>
+    <div class="aurora-streak"></div>
+    <div class="aurora-motes">
+      <span class="aurora-mote" style="left:16%;top:22%;--sz:10px"></span>
+      <span class="aurora-mote" style="left:78%;top:18%;--sz:8px"></span>
+      <span class="aurora-mote" style="left:64%;top:68%;--sz:12px"></span>
+      <span class="aurora-mote" style="left:28%;top:76%;--sz:9px"></span>
+      <span class="aurora-mote" style="left:46%;top:34%;--sz:7px"></span>
+      <span class="aurora-mote" style="left:86%;top:54%;--sz:11px"></span>
+    </div>
+    <div class="aurora-cursor-glow"></div>
+    <div class="aurora-grain"></div>
+  </div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+
+  <!-- Floating pill navigation -->
+  <nav class="dock" aria-label="Sections">
+    <ul>
+      <li class="dock__indicator" aria-hidden="true"></li>
+      <li><a href="#home" data-nav="home">Home</a></li>
+      <li><a href="#about" data-nav="about">About</a></li>
+      <li><a href="#skills" data-nav="skills">Skills</a></li>
+      <li><a href="#projects" data-nav="projects">Projects</a></li>
+      <li><a href="#freelance" data-nav="freelance">Freelance</a></li>
+      <li><a href="#brands" data-nav="brands">Brands</a></li>
+      <li><a href="#contact" data-nav="contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <!-- 1 · HERO -->
+    <section class="slide slide--hero" id="home" aria-labelledby="hero-title">
+      <div class="slide-frame">
+        <div class="ghost-wrap" data-parallax="140" aria-hidden="true">
+          <div class="ghost" data-hero-ghost>Portfolio</div>
+        </div>
+        <div class="slide-head" data-head></div>
+        <div class="slide-inner">
+          <div class="hero-lockup">
+            <h1 class="hero-title" id="hero-title" data-hero-title>Portfolio</h1>
+            <div class="hero-sub">
+              <span class="hero-line" aria-hidden="true"></span>
+              <p class="hero-role" data-bind="role">[Your Role]</p>
+            </div>
+          </div>
+        </div>
+        <a class="scroll-cue" href="#about" data-magnetic="0.4" aria-label="Scroll to About section">
+          <span>Scroll</span>
+          <span class="scroll-cue__track" aria-hidden="true"></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 2 · ABOUT -->
+    <section class="slide" id="about" aria-labelledby="about-title">
+      <div class="slide-frame">
+        <div class="slide-head" data-head aria-hidden="true"></div>
+        <div class="slide-inner">
+          <h2 class="title split" id="about-title" data-bind="sections.about">About Me</h2>
+          <span class="title-rule" aria-hidden="true"></span>
+          <p class="lede" data-reveal data-bind="about">[Short bio]</p>
+          <p class="signature" data-reveal>— <span data-bind="name">[Your Name]</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · SKILLS -->
+    <section class="slide" id="skills" aria-labelledby="skills-title">
+      <div class="slide-frame">
+        <div class="slide-head" data-head aria-hidden="true"></div>
+        <div class="slide-inner">
+          <h2 class="title split" id="skills-title" data-bind="sections.skills">Skills &amp; Software</h2>
+          <span class="title-rule" aria-hidden="true"></span>
+          <ul class="tools" data-tools data-stagger aria-label="Tools and software"></ul>
+          <p class="lede" data-reveal data-bind="skillsText">[Skills paragraph]</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · PERSONAL PROJECTS -->
+    <section class="slide" id="projects" aria-labelledby="projects-title">
+      <div class="slide-frame">
+        <div class="slide-head" data-head aria-hidden="true"></div>
+        <div class="slide-inner">
+          <h2 class="title split" id="projects-title" data-bind="sections.personal">Personal Projects</h2>
+          <ul class="card-row" data-cards="personal" data-stagger aria-label="Personal projects"></ul>
+          <p class="swipe-hint" aria-hidden="true">Swipe to explore →</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · FREELANCE -->
+    <section class="slide" id="freelance" aria-labelledby="freelance-title">
+      <div class="slide-frame">
+        <div class="slide-head" data-head aria-hidden="true"></div>
+        <div class="slide-inner">
+          <h2 class="title split" id="freelance-title" data-bind="sections.freelance">Freelance Work</h2>
+          <ul class="card-row card-row--sm" data-cards="freelance" data-stagger aria-label="Freelance work"></ul>
+          <p class="swipe-hint" aria-hidden="true">Swipe to explore →</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · BRANDS -->
+    <section class="slide" id="brands" aria-labelledby="brands-title">
+      <div class="slide-frame">
+        <div class="slide-head" data-head aria-hidden="true"></div>
+        <div class="slide-inner">
+          <h2 class="title split" id="brands-title" data-bind="sections.brands">Collaboration with Brands</h2>
+          <ul class="card-row card-row--narrow" data-cards="brands" data-stagger aria-label="Brand collaborations"></ul>
+          <p class="swipe-hint" aria-hidden="true">Swipe to explore →</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · THANK YOU / CONTACT -->
+    <section class="slide slide--contact" id="contact" aria-labelledby="contact-title">
+      <div class="slide-frame">
+        <div class="ghost-wrap" data-parallax="120" aria-hidden="true">
+          <div class="ghost" data-bind="contact.ghost">Contact</div>
+        </div>
+        <div class="slide-head" data-head aria-hidden="true"></div>
+        <div class="slide-inner">
+          <div class="contact-stage" data-reveal>
+            <figure class="qr qr--l" data-qr="0"></figure>
+            <div class="contact-main">
+              <h2 class="title contact-title split" id="contact-title" data-bind="contact.title">Thank You</h2>
+              <p class="contact-sub" data-bind="contact.subtitle">Let's Work Together</p>
+              <div class="contact-bottom">
+                <a class="email-line" data-email-link href="#"><span data-bind="contact.email">[your.email@example.com]</span></a>
+                <ul class="socials" data-socials aria-label="Social links"></ul>
+                <a class="btn" data-email-link data-magnetic="0.3" href="#">
+                  Say Hello <span class="btn__arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <figure class="qr qr--r" data-qr="1"></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Project lightbox -->
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lb-title" aria-describedby="lb-desc">
+    <div class="lb-backdrop" data-lb-close></div>
+    <button class="icon-btn lb-close" type="button" data-lb-close aria-label="Close project" autofocus>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="lb-panel" data-lenis-prevent>
+      <div class="lb-content">
+        <div class="lb-poster"></div>
+        <div class="lb-info">
+          <p class="lb-count"></p>
+          <h3 class="lb-title" id="lb-title"></h3>
+          <p class="lb-meta"></p>
+          <p class="lb-desc" id="lb-desc"></p>
+          <div class="lb-actions">
+            <button class="icon-btn" type="button" data-lb-prev aria-label="Previous project">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="icon-btn" type="button" data-lb-next aria-label="Next project">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <a class="btn btn--ghost lb-link" href="#" target="_blank" rel="noopener" hidden>View Project <span class="btn__arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Custom cursor (activated by JS on desktop only) -->
+  <div class="cursor is-hidden" aria-hidden="true">
+    <div class="cursor-ring"><span class="cursor-ring__circle"></span><span class="cursor-ring__label">View</span></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <noscript>
+    <p style="position:fixed;inset:auto 1rem 1rem;padding:1rem;background:#fff;color:#0B2A5B;border-radius:12px;z-index:999">
+      This portfolio needs JavaScript to load its content.
+    </p>
+  </noscript>
+
+  <!-- Libraries (pinned). Lenis isn't published on cdnjs, so it's loaded from jsDelivr. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+  <script>
+  /* ================================================================
+     ✏️  CONFIG — EDIT ALL YOUR CONTENT HERE
+     ----------------------------------------------------------------
+     Everything visible on the page comes from this object.
+     • colors: two hex values for the placeholder poster gradient
+     • image:  path/URL to a real image — replaces the gradient
+     • link:   optional URL shown as "View Project" in the lightbox
+     ================================================================ */
+  const CONFIG = {
+    name: "[Your Name]",
+    year: "[Year]",                 // e.g. "2026" → header shows "portfolio2026"
+    role: "[Your Role]",            // e.g. "Graphic Designer"
+    heroWord: "Portfolio",          // solid hero title. Use "\n" for multiple lines: "Port\nfolio"
+    heroGhost: "Portfolio",         // translucent background word
+
+    sections: {
+      about: "About Me",
+      skills: "Skills & Software",
+      personal: "Personal Projects",
+      freelance: "Freelance Work",
+      brands: "Collaboration with Brands",
+    },
+
+    about:
+      "[Short bio] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+
+    skillsText:
+      "[Skills paragraph] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+
+    // abbr = the 1–3 letters shown in the round icon
+    tools: [
+      { name: "[Tool One]",   abbr: "T1" },
+      { name: "[Tool Two]",   abbr: "T2" },
+      { name: "[Tool Three]", abbr: "T3" },
+      { name: "[Tool Four]",  abbr: "T4" },
+      { name: "[Tool Five]",  abbr: "T5" },
+      { name: "[Tool Six]",   abbr: "T6" },
+    ],
+
+    projects: {
+      personal: [
+        { title: "[Project Title 01]", category: "[Category]", year: "[Year]", colors: ["#4EA865", "#C7EA6B"], image: "", link: "",
+          description: "[Project description] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus." },
+        { title: "[Project Title 02]", category: "[Category]", year: "[Year]", colors: ["#C9382D", "#F4B63F"], image: "", link: "",
+          description: "[Project description] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum." },
+        { title: "[Project Title 03]", category: "[Category]", year: "[Year]", colors: ["#1B6B3B", "#86D04C"], image: "", link: "",
+          description: "[Project description] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia bibendum nulla sed consectetur." },
+        { title: "[Project Title 04]", category: "[Category]", year: "[Year]", colors: ["#243558", "#C83E3B"], image: "", link: "",
+          description: "[Project description] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper nulla non metus auctor fringilla." },
+      ],
+      freelance: [
+        { title: "[Client Name 01]", category: "[Service]", year: "[Year]", colors: ["#5E3822", "#B87C4C"], image: "", link: "",
+          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus mollis interdum." },
+        { title: "[Client Name 02]", category: "[Service]", year: "[Year]", colors: ["#CBB69D", "#7E5B40"], image: "", link: "",
+          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula." },
+        { title: "[Client Name 03]", category: "[Service]", year: "[Year]", colors: ["#6B4028", "#CA8D58"], image: "", link: "",
+          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper." },
+        { title: "[Client Name 04]", category: "[Service]", year: "[Year]", colors: ["#4A2B1A", "#A86E3E"], image: "", link: "",
+          description: "[Brief + outcome] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod." },
+      ],
+      brands: [
+        { title: "[Brand Name 01]", category: "[Campaign]", year: "[Year]", colors: ["#CBD5DF", "#9E8C7A"], image: "", link: "",
+          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+        { title: "[Brand Name 02]", category: "[Campaign]", year: "[Year]", colors: ["#E8E4DC", "#B5ACA0"], image: "", link: "",
+          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+        { title: "[Brand Name 03]", category: "[Campaign]", year: "[Year]", colors: ["#F7F5F0", "#D5C4A8"], image: "", link: "",
+          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+        { title: "[Brand Name 04]", category: "[Campaign]", year: "[Year]", colors: ["#CFD6D2", "#7E8C85"], image: "", link: "",
+          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+        { title: "[Brand Name 05]", category: "[Campaign]", year: "[Year]", colors: ["#183026", "#48725E"], image: "", link: "",
+          description: "[Collaboration details] Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+      ],
+    },
+
+    contact: {
+      ghost: "Contact",
+      title: "Thank You",
+      subtitle: "Let's Work Together",
+      email: "[your.email@example.com]",
+      socials: [
+        { label: "[Instagram]", url: "#" },
+        { label: "[Behance]",   url: "#" },
+        { label: "[LinkedIn]",  url: "#" },
+      ],
+      // image: path to a real QR code PNG/SVG. Leave "" to show the placeholder.
+      qr: [
+        { label: "Let's Work Together", url: "#", image: "" },
+        { label: "Full Portfolio",      url: "#", image: "" },
+      ],
+    },
+  };
+
+  /* ================================================================
+     🌌  AURORA BACKGROUND SETTINGS — tweak speed & motion here
+         (Colors & blur are defined in :root at the top of <style>)
+     ================================================================ */
+  const BG_CONFIG = {
+    speedMultiplier: 1,      // 1 = default (22–38s loops). 0.5 = faster, 1.5 = slower
+    scrollShift: true,       // smoothly shift aurora palette across sections on scroll
+    cursorGlow: true,        // soft radial glow following cursor on desktop
+    cursorSmoothing: 0.65,   // seconds of easing on the cursor glow
+    blobs: [
+      { x: 18,  y: 14,  scale: 1.14, rotate: 18,  duration: 24 }, // --aurora-1 (soft blue)
+      { x: -16, y: 18,  scale: 1.18, rotate: -22, duration: 30 }, // --aurora-2 (lavender)
+      { x: 20,  y: -16, scale: 1.15, rotate: 15,  duration: 34 }, // --aurora-3 (soft pink)
+      { x: -18, y: -14, scale: 1.12, rotate: -16, duration: 28 }, // --aurora-4 (light cyan)
+      { x: 14,  y: -18, scale: 1.22, rotate: 24,  duration: 38 }, // --aurora-5 (warm peach)
+    ],
+  };
+
+  /* ================================================================
+     Below this line: rendering + motion. No edits needed.
+     ================================================================ */
+  (() => {
+    'use strict';
+
+    // ---------- Helpers ----------
+    const $  = (s, c = document) => c.querySelector(s);
+    const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+    const getPath = (obj, path) => path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
+    const esc = (s = '') => String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    const pad = (n) => String(n).padStart(2, '0');
+
+    /** Relative luminance of a hex color (0–1) — used to pick poster text color */
+    const luminance = (hex) => {
+      const h = hex.replace('#', '');
+      const [r, g, b] = [0, 2, 4].map((i) => {
+        const v = parseInt(h.substr(i, 2), 16) / 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+
+    // Aspect ratio per card group
+    const SHAPES = {
+      personal:  { ar: '3 / 4',  arn: 0.75 },
+      freelance: { ar: '3 / 4',  arn: 0.75 },
+      brands:    { ar: '9 / 16', arn: 0.5625 },
+    };
+
+    // Environment checks
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+    const MOTION = hasGSAP && !prefersReduced;
+
+    /* ==============================================================
+       RENDER — fill the page from CONFIG
+       ============================================================== */
+
+    document.title = `${CONFIG.name} — Portfolio`;
+
+    // Simple text bindings: <el data-bind="path.in.config">
+    $$('[data-bind]').forEach((el) => {
+      const v = getPath(CONFIG, el.dataset.bind);
+      if (v != null) el.textContent = v;
+    });
+
+    // Header row in every slide
+    $$('[data-head]').forEach((el) => {
+      el.innerHTML = `<span>${esc(CONFIG.name)}</span><span>portfolio${esc(CONFIG.year)}</span>`;
+    });
+
+    // Halftone corners, injected into every slide card (except Thank You where QR codes sit in the bottom corners)
+    const halftone = (side, speed) =>
+      `<div class="halftone halftone--${side}" data-parallax="${speed}" aria-hidden="true"><i></i><i></i><i></i><i></i></div>`;
+    $$('.slide:not(.slide--contact) .slide-frame').forEach((f) => f.insertAdjacentHTML('afterbegin', halftone('l', -50) + halftone('r', -95)));
+
+    // Hero ghost + title (each "\n" = a new line, revealed one after another)
+    $('[data-hero-ghost]').textContent = CONFIG.heroGhost || CONFIG.heroWord.replace(/\n/g, '');
+    const heroTitle = $('[data-hero-title]');
+    heroTitle.setAttribute('aria-label', CONFIG.heroWord.replace(/\n/g, ' '));
+    heroTitle.innerHTML = CONFIG.heroWord.split('\n').map((line) =>
+      `<span class="line" aria-hidden="true">${[...line].map((ch) => `<span class="c">${ch === ' ' ? '&nbsp;' : esc(ch)}</span>`).join('')}</span>`
+    ).join('');
+
+    // Split section headings into masked words/chars for the reveal
+    $$('.split').forEach((h) => {
+      const text = h.textContent.trim();
+      h.setAttribute('aria-label', text);
+      h.innerHTML = text.split(/\s+/).map((word) =>
+        `<span class="w" aria-hidden="true">${[...word].map((ch) => `<span class="c">${esc(ch)}</span>`).join('')}</span>`
+      ).join(' ');
+    });
+
+    // Tools
+    $('[data-tools]').innerHTML = CONFIG.tools.map((t) =>
+      `<li class="tool"><span class="tool__icon" aria-hidden="true">${esc(t.abbr)}</span><span class="tool__name">${esc(t.name)}</span></li>`
+    ).join('');
+
+    // Poster art: a real image if provided, otherwise a generated gradient poster
+    function posterMarkup(p, i, group) {
+      if (p.image) return `<img src="${esc(p.image)}" alt="${esc(p.title)} — ${esc(p.category)}" loading="lazy" decoding="async">`;
+      const [c1, c2] = p.colors || ['#3B6FD8', '#0B2A5B'];
+      const ink = (luminance(c1) + luminance(c2)) / 2 > 0.4 ? '#0B1A33' : '#FFFFFF';
+      return `
+        <span class="poster poster--v${i % 4}" style="--c1:${c1};--c2:${c2};--ink:${ink}" aria-hidden="true">
+          <span class="poster__shape poster__shape--a"></span>
+          <span class="poster__shape poster__shape--b"></span>
+          <span class="poster__dots"></span>
+          <span class="poster__top"><span>No.${pad(i + 1)}</span><span>${esc(p.category)}</span></span>
+          <span class="poster__title">${esc(p.title)}</span>
+          <span class="poster__foot"><span>${esc(CONFIG.name)}</span><span>${esc(p.year)}</span></span>
+        </span>`;
+    }
+
+    // Cards
+    $$('[data-cards]').forEach((row) => {
+      const group = row.dataset.cards;
+      row.innerHTML = CONFIG.projects[group].map((p, i) => `
+        <li class="card-item">
+          <button class="card" type="button" data-group="${group}" data-index="${i}" aria-haspopup="dialog"
+                  aria-label="View ${esc(p.title)}, ${esc(p.category)}">
+            <span class="card-tilt">
+              <span class="card-shadow" aria-hidden="true"></span>
+              <span class="card-media">
+                ${posterMarkup(p, i, group)}
+                <span class="card-glare" aria-hidden="true"></span>
+              </span>
+            </span>
+          </button>
+          <p class="card-cap">
+            <span class="card-cap__title">${esc(p.title)}</span>
+            <span class="card-cap__meta">${esc(p.category)}</span>
+          </p>
+        </li>`).join('');
+    });
+
+    // Contact: email links + socials
+    $$('[data-email-link]').forEach((a) => (a.href = `mailto:${CONFIG.contact.email}`));
+    $('[data-socials]').innerHTML = CONFIG.contact.socials.map((s) =>
+      `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
+    ).join('');
+
+    // QR placeholders — deterministic fake pattern, clearly labeled as a placeholder
+    function qrPlaceholderSVG(seedText) {
+      const N = 25;
+      let seed = [...seedText].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7);
+      const rand = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+      const inFinder = (x, y) => (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
+      let cells = '';
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        if (!inFinder(x, y) && rand() > 0.52) cells += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+      }
+      const finder = (x, y) =>
+        `<rect x="${x}" y="${y}" width="7" height="7"/><rect x="${x + 1}" y="${y + 1}" width="5" height="5" fill="#fff"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3"/>`;
+      return `<svg viewBox="0 0 ${N} ${N}" shape-rendering="crispEdges" aria-hidden="true"><g fill="#0B2A5B">${cells}${finder(0, 0)}${finder(N - 7, 0)}${finder(0, N - 7)}</g></svg>`;
+    }
+    $$('[data-qr]').forEach((fig) => {
+      const q = CONFIG.contact.qr[+fig.dataset.qr];
+      if (!q) { fig.remove(); return; }
+      const code = q.image
+        ? `<img src="${esc(q.image)}" alt="QR code: ${esc(q.label)}">`
+        : `${qrPlaceholderSVG(q.label)}<span class="qr__badge">Placeholder</span>`;
+      const wrapped = q.url && q.url !== '#'
+        ? `<a href="${esc(q.url)}" target="_blank" rel="noopener" aria-label="${esc(q.label)}">${code}</a>`
+        : code;
+      fig.innerHTML = `
+        <figcaption class="qr__label">${esc(q.label)}</figcaption>
+        <div class="qr__code" role="img" aria-label="${q.image ? '' : 'Placeholder QR code for '}${esc(q.label)}">${wrapped}</div>
+        ${q.image ? '' : '<span class="qr__note">[Replace with your QR]</span>'}`;
+    });
+
+    /* ==============================================================
+       NAV — active section + scroll progress (works with or without GSAP)
+       ============================================================== */
+    const dockList = $('.dock ul');
+    const indicator = $('.dock__indicator');
+    const navLinks = $$('[data-nav]');
+    let activeId = null;
+
+    function moveIndicator(link, instant) {
+      if (!link) return;
+      const x = link.offsetLeft, w = link.offsetWidth;
+      if (MOTION && !instant) {
+        gsap.to(indicator, { x, scaleX: w / 100, duration: 0.6, ease: 'expo.out' });
+      } else {
+        indicator.style.transform = `translateX(${x}px) scaleX(${w / 100})`;
+      }
+      indicator.classList.add('is-ready');
+      // keep the active pill visible when the dock scrolls on small screens
+      if (dockList.scrollWidth > dockList.clientWidth) {
+        dockList.scrollTo({ left: x - dockList.clientWidth / 2 + w / 2, behavior: prefersReduced ? 'auto' : 'smooth' });
+      }
+    }
+    function setActive(id) {
+      if (id === activeId) return;
+      activeId = id;
+      navLinks.forEach((a) => {
+        const on = a.dataset.nav === id;
+        a.toggleAttribute('aria-current', on);
+        if (on) a.setAttribute('aria-current', 'true');
+        if (on) moveIndicator(a);
+      });
+    }
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    $$('.slide').forEach((s) => sectionObserver.observe(s));
+    window.addEventListener('resize', () => moveIndicator($(`[data-nav="${activeId}"]`), true));
+
+    const progress = $('.progress');
+    let ticking = false;
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(updateProgress); } }, { passive: true });
+    updateProgress();
+
+    /* ==============================================================
+       SMOOTH SCROLL (Lenis) + anchor links
+       ============================================================== */
+    let lenis = null;
+    if (MOTION) {
+      gsap.registerPlugin(ScrollTrigger);
+      if (typeof window.Lenis !== 'undefined') {
+        lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(target, { duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4) });
+      else target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+      // move keyboard focus to the section for screen reader / keyboard users
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+      history.replaceState(null, '', id);
+    });
+
+    /* ==============================================================
+       MOTION — only transform + opacity are animated
+       ============================================================== */
+    if (MOTION) {
+      // ---------- Hero intro ----------
+      const ghost = $('.slide--hero .ghost');
+      const heroLines = $$('.hero-title .line');
+      gsap.set(ghost, { opacity: 0, scale: 1.18, yPercent: 6 });
+      heroLines.forEach((l) => gsap.set($$('.c', l), { yPercent: 115 }));
+      gsap.set('.hero-line', { scaleX: 0 });
+      gsap.set(['.hero-role', '.slide--hero .slide-head > *', '.scroll-cue'], { opacity: 0, y: 14 });
+      gsap.set('.dock', { opacity: 0, y: 30 });
+      document.documentElement.classList.remove('js-intro');
+
+      const startIntro = () => {
+        const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+        tl.to(ghost, { opacity: 1, scale: 1, yPercent: 0, duration: 2.8, ease: 'power3.out' }, 0);
+        // reveal the solid title line by line, letter by letter
+        heroLines.forEach((line, i) => {
+          tl.to($$('.c', line), { yPercent: 0, duration: 1.25, stagger: 0.045 }, 0.3 + i * 0.22);
+        });
+        const after = 0.9 + heroLines.length * 0.22;
+        tl.to('.hero-line', { scaleX: 1, duration: 1.3, ease: 'power3.inOut' }, after - 0.2)
+          .to('.hero-role', { opacity: 1, y: 0, duration: 1 }, after + 0.15)
+          .to('.slide--hero .slide-head > *', { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }, after)
+          .to('.scroll-cue', { opacity: 1, y: 0, duration: 0.9 }, after + 0.35)
+          .to('.dock', { opacity: 1, y: 0, duration: 1, onComplete: () => moveIndicator($(`[data-nav="${activeId || 'home'}"]`), true) }, after + 0.3);
+        // slow, endless drift on the ghost word
+        gsap.to(ghost, { xPercent: -3, duration: 10, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      };
+      // wait for fonts (max 1.2s) so letters don't reflow mid-animation
+      Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1200))])
+        .then(() => { startIntro(); ScrollTrigger.refresh(); });
+
+      // ---------- Slide-to-slide transitions ----------
+      // Each slide gently scales/fades up as it enters…
+      $$('.slide:not(.slide--hero) .slide-frame').forEach((frame) => {
+        gsap.fromTo(frame,
+          { scale: 0.9, opacity: 0.3, transformOrigin: '50% 0%' },
+          { scale: 1, opacity: 1, ease: 'none',
+            scrollTrigger: { trigger: frame.parentElement, start: 'top bottom', end: 'top 30%', scrub: 0.6 } });
+      });
+      // …and recedes slightly as it leaves (desktop only, keeps mobile reading crisp)
+      gsap.matchMedia().add('(min-width: 768px)', () => {
+        $$('.slide .slide-inner').forEach((inner) => {
+          gsap.to(inner, {
+            scale: 0.95, opacity: 0.45, y: -40, ease: 'none',
+            scrollTrigger: { trigger: inner.closest('.slide'), start: 'bottom 65%', end: 'bottom top', scrub: 0.6 },
+          });
+        });
+      });
+
+      // ---------- Scroll-triggered reveals ----------
+      $$('.split').forEach((h) => {
+        gsap.from($$('.c', h), {
+          yPercent: 115, duration: 1.1, ease: 'expo.out', stagger: 0.028,
+          scrollTrigger: { trigger: h, start: 'top 85%', once: true },
+        });
+      });
+      $$('[data-reveal]').forEach((el) => {
+        gsap.from(el, {
+          opacity: 0, y: 40, duration: 1.1, ease: 'expo.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        });
+      });
+      $$('[data-stagger]').forEach((group) => {
+        const isCards = group.classList.contains('card-row');
+        gsap.from(group.children, {
+          opacity: 0, y: isCards ? 90 : 30, scale: isCards ? 0.94 : 1,
+          duration: isCards ? 1.2 : 0.9, ease: 'expo.out', stagger: isCards ? 0.09 : 0.06,
+          scrollTrigger: { trigger: group, start: 'top 85%', once: true },
+        });
+      });
+      $$('.slide:not(.slide--hero) .slide-head').forEach((head) => {
+        gsap.from(head.children, {
+          opacity: 0, y: -10, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+          scrollTrigger: { trigger: head.closest('.slide'), start: 'top 70%', once: true },
+        });
+      });
+
+      // ---------- Parallax: ghost text + halftones move at their own speeds ----------
+      $$('[data-parallax]').forEach((el) => {
+        const travel = parseFloat(el.dataset.parallax) || 0;
+        const slide = el.closest('.slide');
+        const isHero = slide.classList.contains('slide--hero');
+        gsap.fromTo(el,
+          { y: isHero ? 0 : -travel / 2 },
+          { y: isHero ? travel : travel / 2, ease: 'none',
+            scrollTrigger: { trigger: slide, start: isHero ? 'top top' : 'top bottom', end: 'bottom top', scrub: true } });
+      });
+
+      // ---------- Aurora Background: 20–40s blob drift + scroll-reactive color shift ----------
+      const isMobileBG = window.matchMedia('(max-width: 767px)').matches;
+      const mult = BG_CONFIG.speedMultiplier || 1;
+      $$('.aurora-blob').forEach((blob, i) => {
+        if (isMobileBG && i >= 3) return; // mobile uses 3 blobs for 60fps efficiency
+        const cfg = BG_CONFIG.blobs[i] || BG_CONFIG.blobs[0];
+        gsap.to(blob, {
+          xPercent: cfg.x,
+          yPercent: cfg.y,
+          scale: cfg.scale,
+          rotation: cfg.rotate,
+          duration: cfg.duration * mult,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        });
+      });
+
+      // Faint floating light motes
+      $$('.aurora-mote').forEach((mote, i) => {
+        if (isMobileBG && i >= 3) return;
+        gsap.to(mote, {
+          x: (i % 2 === 0 ? 1 : -1) * (24 + i * 7),
+          y: -36 - i * 10,
+          opacity: 0.55,
+          duration: (18 + i * 3) * mult,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        });
+      });
+
+      // Scroll-reactive palette shift (transform & opacity only, zero color-repaint jumps)
+      if (BG_CONFIG.scrollShift) {
+        const bgTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#main',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.1,
+          },
+        });
+        // Stage 1 -> Stage 2 (Hero/About blue-lavender -> Skills/Projects/Freelance pink-peach)
+        bgTl
+          .to('.aurora-wash--hero', { opacity: 0.15, scale: 1.08, yPercent: -6, duration: 1, ease: 'sine.inOut' }, 0)
+          .fromTo('.aurora-wash--mid', { opacity: 0.08, scale: 0.94, yPercent: 6 }, { opacity: 0.95, scale: 1.04, yPercent: 0, duration: 1, ease: 'sine.inOut' }, 0)
+          .to('.aurora-blob--1', { opacity: 0.35, duration: 1, ease: 'sine.inOut' }, 0)
+          .to('.aurora-blob--3', { opacity: 0.85, duration: 1, ease: 'sine.inOut' }, 0)
+          // Stage 2 -> Stage 3 (Projects/Freelance pink-peach -> Brands/Contact cyan-blue-lavender)
+          .to('.aurora-wash--mid', { opacity: 0.18, scale: 1.08, yPercent: -6, duration: 1, ease: 'sine.inOut' }, 1)
+          .fromTo('.aurora-wash--end', { opacity: 0.08, scale: 0.94, yPercent: 6 }, { opacity: 0.95, scale: 1.05, yPercent: 0, duration: 1, ease: 'sine.inOut' }, 1)
+          .to('.aurora-blob--1', { opacity: 0.72, duration: 1, ease: 'sine.inOut' }, 1)
+          .to('.aurora-blob--3', { opacity: 0.38, duration: 1, ease: 'sine.inOut' }, 1)
+          .to('.aurora-streak', { yPercent: 14, rotation: 4, duration: 2, ease: 'none' }, 0);
+      }
+
+      // Desktop-only soft cursor radial glow
+      if (BG_CONFIG.cursorGlow && finePointer && !isMobileBG) {
+        const glow = $('.aurora-cursor-glow');
+        if (glow) {
+          const gX = gsap.quickTo(glow, 'x', { duration: BG_CONFIG.cursorSmoothing, ease: 'power3' });
+          const gY = gsap.quickTo(glow, 'y', { duration: BG_CONFIG.cursorSmoothing, ease: 'power3' });
+          let glowShown = false;
+          window.addEventListener('pointermove', (e) => {
+            if (e.pointerType !== 'mouse') return;
+            if (!glowShown) {
+              glowShown = true;
+              gsap.to(glow, { opacity: 1, duration: 0.8, ease: 'power2.out' });
+            }
+            gX(e.clientX);
+            gY(e.clientY);
+          }, { passive: true });
+        }
+      }
+
+      // Re-measure once everything (fonts, layout) has settled
+      window.addEventListener('load', () => ScrollTrigger.refresh());
+    } else {
+      document.documentElement.classList.remove('js-intro');
+      moveIndicator($('[data-nav="home"]'), true);
+    }
+
+    /* ==============================================================
+       POSTER CARDS — 3D tilt, lift, glare (desktop + motion only)
+       ============================================================== */
+    const cards = $$('.card');
+    if (MOTION && finePointer) {
+      cards.forEach((card) => {
+        const tilt = $('.card-tilt', card);
+        const glare = $('.card-glare', card);
+        const rx = gsap.quickTo(tilt, 'rotationX', { duration: 0.6, ease: 'power3' });
+        const ry = gsap.quickTo(tilt, 'rotationY', { duration: 0.6, ease: 'power3' });
+        const gx = gsap.quickTo(glare, 'xPercent', { duration: 0.6, ease: 'power3' });
+        const gy = gsap.quickTo(glare, 'yPercent', { duration: 0.6, ease: 'power3' });
+
+        const lift = () => { card.classList.add('is-hover'); gsap.to(tilt, { y: -12, scale: 1.035, duration: 0.6, ease: 'expo.out' }); };
+        const drop = () => { card.classList.remove('is-hover'); rx(0); ry(0); gsap.to(tilt, { y: 0, scale: 1, duration: 0.7, ease: 'expo.out' }); };
+
+        card.addEventListener('pointerenter', lift);
+        card.addEventListener('pointerleave', drop);
+        card.addEventListener('focus', () => { if (card.matches(':focus-visible')) lift(); });
+        card.addEventListener('blur', drop);
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          rx(-py * 14); ry(px * 14);
+          gx(px * 50); gy(py * 50);
+        });
+      });
+    }
+
+    /* ==============================================================
+       MOUSE DRAG for overflowing card rows (touch uses native swipe)
+       ============================================================== */
+    $$('.card-row').forEach((row) => {
+      let down = false, moved = false, startX = 0, startLeft = 0;
+      row.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'mouse' || row.scrollWidth <= row.clientWidth) return;
+        down = true; moved = false; startX = e.clientX; startLeft = row.scrollLeft;
+      });
+      window.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 5) {
+          if (!moved) { moved = true; row.classList.add('is-dragging'); }
+          row.scrollLeft = startLeft - dx;
+        }
+      });
+      window.addEventListener('pointerup', () => {
+        if (!down) return;
+        down = false;
+        row.classList.remove('is-dragging');
+      });
+      // swallow the click that ends a drag so it doesn't open the lightbox
+      row.addEventListener('click', (e) => {
+        if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+      }, true);
+    });
+
+    /* ==============================================================
+       LIGHTBOX — FLIP from the card into the dialog and back
+       ============================================================== */
+    const lb = $('#lightbox');
+    const lbPoster = $('.lb-poster', lb);
+    const lbBackdrop = $('.lb-backdrop', lb);
+    const lbInfo = $('.lb-info', lb);
+    const lbClose = $('.lb-close', lb);
+    const lbLink = $('.lb-link', lb);
+    const cursorEl = $('.cursor');
+    let lbGroup = null, lbIndex = 0, lbBusy = false;
+
+    const cardFor = (group, index) => $(`.card[data-group="${group}"][data-index="${index}"]`);
+
+    function fillLightbox() {
+      const items = CONFIG.projects[lbGroup];
+      const p = items[lbIndex];
+      const shape = SHAPES[lbGroup];
+      lbPoster.style.setProperty('--ar', shape.ar);
+      lbPoster.style.setProperty('--arn', shape.arn);
+      lbPoster.innerHTML = posterMarkup(p, lbIndex, lbGroup);
+      $('.lb-count', lb).textContent = `${pad(lbIndex + 1)} / ${pad(items.length)}`;
+      $('.lb-title', lb).textContent = p.title;
+      $('.lb-meta', lb).textContent = [p.category, p.year].filter(Boolean).join(' · ');
+      $('.lb-desc', lb).textContent = p.description || '';
+      lbLink.hidden = !p.link;
+      if (p.link) lbLink.href = p.link;
+    }
+
+    function flipDelta(fromEl) {
+      const from = fromEl.getBoundingClientRect();
+      const to = lbPoster.getBoundingClientRect();
+      return { x: from.left - to.left, y: from.top - to.top, scale: from.width / to.width };
+    }
+
+    function openLightbox(card) {
+      if (lbBusy || lb.open) return;
+      lbGroup = card.dataset.group;
+      lbIndex = +card.dataset.index;
+      fillLightbox();
+      lb.showModal();
+      document.documentElement.classList.add('modal-open');
+      if (lenis) lenis.stop();
+      if (cursorEl) lb.appendChild(cursorEl); // keep the custom cursor above the top layer
+
+      if (!MOTION) return;
+      lbBusy = true;
+      const tilt = $('.card-tilt', card);
+      gsap.killTweensOf(tilt);
+      gsap.set(tilt, { rotationX: 0, rotationY: 0, y: 0, scale: 1 });
+      card.classList.remove('is-hover');
+      const d = flipDelta($('.card-media', card));
+      gsap.set(tilt, { opacity: 0 });
+      gsap.timeline({ onComplete: () => (lbBusy = false) })
+        .fromTo(lbBackdrop, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0)
+        .fromTo(lbPoster, d, { x: 0, y: 0, scale: 1, duration: 0.9, ease: 'expo.inOut' }, 0)
+        .fromTo(lbInfo.children, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.06, ease: 'expo.out' }, 0.4)
+        .fromTo(lbClose, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.4);
+    }
+
+    function finishClose() {
+      lb.close();
+      document.documentElement.classList.remove('modal-open');
+      if (lenis) lenis.start();
+      if (cursorEl) document.body.appendChild(cursorEl);
+      $$('.card-tilt').forEach((t) => (t.style.opacity = ''));
+      if (MOTION) gsap.set([lbPoster, lbBackdrop, lbClose, ...lbInfo.children], { clearProps: 'all' });
+      const card = cardFor(lbGroup, lbIndex);
+      if (card) card.focus({ preventScroll: true });
+      lbBusy = false;
+    }
+
+    function closeLightbox() {
+      if (!lb.open || lbBusy) return;
+      if (!MOTION) { finishClose(); return; }
+      lbBusy = true;
+      const card = cardFor(lbGroup, lbIndex);
+      const media = card && $('.card-media', card);
+      const r = media && media.getBoundingClientRect();
+      const visible = r && r.right > 0 && r.left < innerWidth && r.bottom > 0 && r.top < innerHeight;
+      const tl = gsap.timeline({ onComplete: finishClose });
+      tl.to(lbInfo.children, { opacity: 0, y: 12, duration: 0.3, stagger: 0.03, ease: 'power2.in' }, 0)
+        .to(lbClose, { opacity: 0, duration: 0.3 }, 0)
+        .to(lbBackdrop, { opacity: 0, duration: 0.6, ease: 'power2.inOut' }, 0.15);
+      if (visible) {
+        gsap.set($('.card-tilt', card), { opacity: 0 });
+        tl.to(lbPoster, { ...flipDelta(media), duration: 0.8, ease: 'expo.inOut' }, 0.05);
+      } else {
+        tl.to(lbPoster, { opacity: 0, scale: 0.92, duration: 0.5, ease: 'power2.in' }, 0.05);
+      }
+    }
+
+    function stepLightbox(dir) {
+      if (lbBusy) return;
+      const n = CONFIG.projects[lbGroup].length;
+      const next = (lbIndex + dir + n) % n;
+      if (!MOTION) { lbIndex = next; fillLightbox(); return; }
+      lbBusy = true;
+      const parts = [lbPoster, ...lbInfo.children].filter((el) => !el.classList.contains('lb-actions'));
+      gsap.timeline({ onComplete: () => (lbBusy = false) })
+        .to(parts, { opacity: 0, x: -40 * dir, duration: 0.3, ease: 'power2.in', stagger: 0.02 })
+        .add(() => { lbIndex = next; fillLightbox(); })
+        .fromTo(parts, { opacity: 0, x: 40 * dir }, { opacity: 1, x: 0, duration: 0.6, ease: 'expo.out', stagger: 0.04 });
+    }
+
+    cards.forEach((card) => card.addEventListener('click', () => openLightbox(card)));
+    $$('[data-lb-close]', lb).forEach((el) => el.addEventListener('click', closeLightbox));
+    $('[data-lb-prev]', lb).addEventListener('click', () => stepLightbox(-1));
+    $('[data-lb-next]', lb).addEventListener('click', () => stepLightbox(1));
+    lb.addEventListener('cancel', (e) => { e.preventDefault(); closeLightbox(); }); // Esc
+    lb.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') stepLightbox(1);
+      if (e.key === 'ArrowLeft') stepLightbox(-1);
+    });
+    // clicking the empty area around the content also closes
+    $('.lb-panel', lb).addEventListener('click', (e) => { if (e.target === e.currentTarget) closeLightbox(); });
+
+    /* ==============================================================
+       MAGNETIC BUTTONS + CUSTOM CURSOR (desktop only)
+       ============================================================== */
+    if (MOTION && finePointer) {
+      $$('[data-magnetic]').forEach((el) => {
+        const strength = parseFloat(el.dataset.magnetic) || 0.35;
+        const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3' });
+        const yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3' });
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          xTo((e.clientX - (r.left + r.width / 2)) * strength);
+          yTo((e.clientY - (r.top + r.height / 2)) * strength);
+        });
+        el.addEventListener('pointerleave', () => {
+          gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.4)' });
+        });
+      });
+
+      document.documentElement.classList.add('has-cursor');
+      const dot = $('.cursor-dot'), ring = $('.cursor-ring');
+      gsap.set([dot, ring], { xPercent: -50, yPercent: -50 });
+      const dX = gsap.quickTo(dot, 'x', { duration: 0.08 });
+      const dY = gsap.quickTo(dot, 'y', { duration: 0.08 });
+      const rX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3' });
+      const rY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3' });
+
+      window.addEventListener('pointermove', (e) => {
+        if (e.pointerType !== 'mouse') return;
+        cursorEl.classList.remove('is-hidden');
+        dX(e.clientX); dY(e.clientY); rX(e.clientX); rY(e.clientY);
+      }, { passive: true });
+      document.addEventListener('pointerleave', () => cursorEl.classList.add('is-hidden'));
+      document.addEventListener('pointerover', (e) => {
+        const onCard = !!e.target.closest('.card');
+        const onLink = !onCard && !!e.target.closest('a, button, [data-magnetic]');
+        ring.classList.toggle('is-card', onCard);
+        ring.classList.toggle('is-link', onLink);
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
