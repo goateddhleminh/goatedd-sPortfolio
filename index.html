@@ -840,6 +840,7 @@
     }
 
     .tool-detail__inner {
+      position: relative;
       padding: 1.25rem 1.6rem;
       border-radius: var(--radius-card);
       background: rgba(255, 255, 255, 0.88);
@@ -847,6 +848,31 @@
       box-shadow: 0 24px 48px -14px rgba(15, 23, 42, 0.14), inset 0 1px 1.5px rgba(255, 255, 255, 1);
       -webkit-backdrop-filter: blur(24px);
       backdrop-filter: blur(24px);
+    }
+
+    .tool-detail__close {
+      position: absolute;
+      top: 1rem;
+      right: 1.1rem;
+      width: 1.85rem;
+      height: 1.85rem;
+      border-radius: 50%;
+      border: 1px solid rgba(10, 10, 12, 0.12);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.15rem;
+      line-height: 1;
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+
+    .tool-detail__close:hover {
+      background: rgba(10, 10, 12, 0.08);
+      transform: scale(1.08);
     }
 
     .tool-detail__head {
@@ -2099,6 +2125,7 @@
           <!-- Interactive Tool Inspector Drawer -->
           <div class="tool-detail" id="tool-detail" aria-live="polite" style="display: none;">
             <div class="tool-detail__inner">
+              <button class="tool-detail__close" type="button" id="tool-detail-close" aria-label="Close skill details">×</button>
               <div class="tool-detail__head">
                 <span class="tool-detail__badge" id="tool-detail-abbr">T1</span>
                 <div>
@@ -2108,14 +2135,12 @@
               </div>
               <p class="tool-detail__desc" id="tool-detail-desc">Tool description</p>
               <div class="tool-detail__foot">
-                <span class="tool-detail__hint">Click any tool above to view details</span>
+                <span class="tool-detail__hint">Click the active skill again to close</span>
                 <a class="tool-detail__link" id="tool-detail-link" href="#" target="_blank" rel="noopener">Learn more
                   <span>→</span></a>
               </div>
             </div>
           </div>
-
-          <p class="lede" data-reveal data-bind="skillsText">[Skills paragraph]</p>
         </div>
       </div>
     </section>
@@ -2264,17 +2289,50 @@
       about:
         "[Short bio] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 
-      skillsText:
-        "[Skills overview] Click any software or framework above to inspect my proficiency level, use cases, and technical domain experience.",
-
       // Interactive Tools: click any tool on the site to inspect its details!
       tools: [
-        { name: "[Tool One]", abbr: "T1", level: "Expert · 5+ Yrs", desc: "[Tool One description] Primary tool used for high-fidelity interactive prototyping, design system architecture, and asset production.", url: "#" },
-        { name: "[Tool Two]", abbr: "T2", level: "Advanced · 4+ Yrs", desc: "[Tool Two description] Used for engineering modern component systems, fluid responsive layouts, and performance optimization.", url: "#" },
-        { name: "[Tool Three]", abbr: "T3", level: "Proficient · 3+ Yrs", desc: "[Tool Three description] Applied in interactive WebGL canvases, real-time 3D shaders, and camera path choreography.", url: "#" },
-        { name: "[Tool Four]", abbr: "T4", level: "Expert · 4+ Yrs", desc: "[Tool Four description] Powers complex timeline choreography, physics-based springs, and scroll-linked micro-interactions.", url: "#" },
-        { name: "[Tool Five]", abbr: "T5", level: "Mastery · 4+ Yrs", desc: "[Tool Five description] Implements design tokens, clear glassmorphism styling, and accessible WCAG AAA contrast hierarchy.", url: "#" },
-        { name: "[Tool Six]", abbr: "T6", level: "Proficient · 3+ Yrs", desc: "[Tool Six description] Used for video post-production, motion graphics reels, and dynamic social presentation deliverables.", url: "#" },
+        {
+          name: "Microsoft Word",
+          abbr: "Wd",
+          level: "Certified Specialist · MOS Word 2019",
+          desc: "Certified in Microsoft Office Specialist: Word 2019. Proficient in advanced document structuring, automated indexing, professional layout styling, collaborative workflow, and typography standards.",
+          url: "#"
+        },
+        {
+          name: "Microsoft Excel",
+          abbr: "Xl",
+          level: "Certified Specialist · MOS Excel 2019",
+          desc: "Certified in Microsoft Office Specialist: Excel 2019. Skilled in dynamic formula architecture, data modeling, PivotTables, analytical charts, lookup functions, and automated spreadsheet reporting.",
+          url: "#"
+        },
+        {
+          name: "Upcoming",
+          abbr: "+",
+          level: "In Progress · Continuous Learning",
+          desc: "Currently learning and expanding my skill set. More tools, frameworks, and certifications will be added here soon.",
+          url: "#"
+        },
+        {
+          name: "Upcoming",
+          abbr: "+",
+          level: "In Progress · Continuous Learning",
+          desc: "Currently learning and expanding my skill set. More tools, frameworks, and certifications will be added here soon.",
+          url: "#"
+        },
+        {
+          name: "Upcoming",
+          abbr: "+",
+          level: "In Progress · Continuous Learning",
+          desc: "Currently learning and expanding my skill set. More tools, frameworks, and certifications will be added here soon.",
+          url: "#"
+        },
+        {
+          name: "Upcoming",
+          abbr: "+",
+          level: "In Progress · Continuous Learning",
+          desc: "Currently learning and expanding my skill set. More tools, frameworks, and certifications will be added here soon.",
+          url: "#"
+        },
       ],
 
       projects: {
@@ -2469,7 +2527,32 @@
 
       let activeToolIdx = null;
 
+      function hideToolDetail() {
+        if (toolDetail.style.display === 'none') return;
+        activeToolIdx = null;
+        $$('.tool', toolsContainer).forEach((btn) => btn.classList.remove('is-active'));
+        if (MOTION) {
+          gsap.to(toolDetail, {
+            opacity: 0,
+            y: 12,
+            scale: 0.98,
+            duration: 0.3,
+            ease: 'power2.in',
+            onComplete: () => {
+              toolDetail.style.display = 'none';
+            }
+          });
+        } else {
+          toolDetail.style.display = 'none';
+        }
+      }
+
       function showToolDetail(idx) {
+        if (activeToolIdx === idx && toolDetail.style.display !== 'none') {
+          hideToolDetail();
+          return;
+        }
+
         const tool = CONFIG.tools[idx];
         if (!tool) return;
         activeToolIdx = idx;
@@ -2494,7 +2577,7 @@
           if (MOTION) {
             gsap.fromTo(toolDetail,
               { opacity: 0, y: 16, scale: 0.98 },
-              { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'expo.out' }
+              { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'expo.out' }
             );
           }
         } else if (MOTION) {
@@ -2511,6 +2594,11 @@
         const idx = parseInt(btn.dataset.toolIndex, 10);
         showToolDetail(idx);
       });
+
+      const toolCloseBtn = $('#tool-detail-close');
+      if (toolCloseBtn) {
+        toolCloseBtn.addEventListener('click', hideToolDetail);
+      }
 
       // Poster art
       function posterMarkup(p, i, group) {
